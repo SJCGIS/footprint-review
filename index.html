@@ -78,9 +78,7 @@
              url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/2'
          }).addTo(map2);
 
-         var query = L.esri.Tasks.query({
-             url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/0'
-         });
+         var query = locationLayer.query();
 
          var mapIdControl = L.Control.extend({
              options: {
