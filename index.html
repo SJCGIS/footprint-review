@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
     <head>
         <title>
-            Footprint Compare - San Juan County WA
+            Footprint Review - San Juan County WA
         </title>
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
@@ -37,10 +37,10 @@
         <div id="footer">
             <h3>Which building footprint is better?</h3>
             <p>Choose Map 1 if footprints are identical. Skip if the building is obscured in the photo. Flag if neither footprint is accurate.</p>
-            <button type="button" name="map1" onclick="submitVote('map1')">Map 1</button>
-            <button type="button" name="skip" onclick="submitVote('skip')">Skip</button>
-            <button type="button" name="flag" onclick="submitVote('flag')">Flag</button>
-            <button type="button" name="map2" onclick="submitVote('map2')">Map 2</button>
+            <button type="button" name="map1" onclick="submitVote('voteSjc')">Map 1</button>
+            <button type="button" name="skip" onclick="submitVote('voteSkip')">Skip</button>
+            <button type="button" name="flag" onclick="submitVote('voteFlag')">Flag</button>
+            <button type="button" name="map2" onclick="submitVote('votePict')">Map 2</button>
             <p><a target="_blank" href="readme.html">What is this?</a></p>
         </div>
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -48,6 +48,7 @@
 
         <script type="text/javascript">
          var currentId;
+         var canUseLocalStorage = storageAvailable('localStorage');
 
          var mapOptions = {
              minZoom: 16,
@@ -121,12 +122,12 @@
 
 
          /**
-            * This function finds a random compare location and passes the
+          * This function finds a random compare location and passes the
             footprint IDs to the drawFootprints function.
-            * @param {min} minimum inclusive feature id for random function
-            * @param {max} maximum inclusive feature id for random function
-            * @returns {}
-         */
+          * @param {min} minimum inclusive feature id for random function
+          * @param {max} maximum inclusive feature id for random function
+          * @returns {}
+          */
          function getRandomFootprint(min, max) {
              currentId = Math.floor(Math.random() * (max- min + 1)) + min;
              query.where("OBJECTID = " + currentId);
@@ -140,12 +141,12 @@
          };
 
          /**
-            * This function modifies the `where` parameter on the footprint
+          * This function modifies the `where` parameter on the footprint
             layers and centers the maps on the location
-            * @param {loc} coordinates to center the maps
-            * @param {sjcId} feature id for the SJC footprints
-            * @param {pictId} feature id for the Pictometry footprints
-            * @returns {}
+          * @param {loc} coordinates to center the maps
+          * @param {sjcId} feature id for the SJC footprints
+          * @param {pictId} feature id for the Pictometry footprints
+          * @returns {}
           */
          function drawFootprints(loc, sjcId, pictId) {
              sjcFootprintLayer.setWhere("OBJECTID = " + sjcId);
@@ -155,28 +156,30 @@
          }
 
          /**
-            * This function adds one to the appropriate field in the
+          * This function adds one to the appropriate field in the
             locationLayer based on the button clicked. Afterwards it
             automatically requests a new location.
-            * @param {button} id of the button clicked
-            * @returns {}
+          * @param {vote} id of the button clicked
+          * @returns {}
           */
-         function submitVote(button) {
+         function submitVote(vote) {
              query.where("OBJECTID = " + currentId);
              query.run(function(err, fc, res) {
                  if (err) throw new Error(err.message);
+                 addVote('voteTotal',1);
+                 addVote(vote,1);
                  var f = fc.features[0];
-                 switch (button) {
-                     case 'map1':
+                 switch (vote) {
+                     case 'voteSjc':
                          f.properties.SJC_VOTES += 1;
                          break;
-                     case 'map2':
+                     case 'votePict':
                          f.properties.PICT_VOTES += 1;
                          break;
-                     case 'skip':
+                     case 'voteSkip':
                          f.properties.SKIPS += 1;
                          break;
-                     case 'flag':
+                     case 'voteFlag':
                          f.properties.FLAGS += 1;
                          break;
                      default:
@@ -193,6 +196,41 @@
 
              });
          }
+
+         /**
+          * This function updates the vote count for a specific key in
+            localStorage.
+            * @param {vote} vote key
+            * @param {count} amount to increment the vote by (usually 1)
+            * @returns {}
+          */
+         function addVote(vote, count) {
+             if (canUseLocalStorage) {
+                 var oldValue = parseInt(localStorage.getItem(vote)) || 0;
+                 localStorage.setItem(vote, oldValue + count);
+             }
+         }
+
+         /**
+          * This function checks if Storage is available in the
+            browser.
+            * @param {type} type of Storage to test, localStorage,
+            sessionStorage, or globalStorage
+            * @returns {boolean}
+          */
+         function storageAvailable(type) {
+	     try {
+		 var storage = window[type],
+		     x = '__storage_test__';
+		 storage.setItem(x, x);
+		 storage.removeItem(x);
+		 return true;
+	     }
+	     catch(e) {
+		 return false;
+	     }
+         }
+
          getRandomFootprint(1,18772);
         </script>
     </body>
