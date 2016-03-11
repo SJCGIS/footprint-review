@@ -63,10 +63,12 @@
              maxZoom: 19
          });
          layer1.addTo(map1);
-         L.esri.tiledMapLayer({
+
+         var layer2 = L.esri.tiledMapLayer({
              url: 'https://sjcgis.org/arcgis/rest/services/Basemaps/Aerials_2013_WM/MapServer',
              maxZoom: 19
-         }).addTo(map2);
+         });
+         layer2.addTo(map2);
 
          var locationLayer = L.esri.Services.featureLayerService({
              url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/0'
@@ -104,6 +106,19 @@
 
          map1.addControl(new mapIdControl({ mapId: 1 }));
          map2.addControl(new mapIdControl({ mapId: 2 }));
+
+         var map1Layers = {
+             "Footprint": sjcFootprintLayer,
+             "Aerial": layer1
+         };
+         L.control.layers(null, map1Layers).addTo(map1);
+
+         var map2Layers = {
+             "Footprint": pictFootprintLayer,
+             "Aerial": layer2
+         };
+         L.control.layers(null, map2Layers).addTo(map2);
+
 
          /**
             * This function finds a random compare location and passes the
