@@ -7,46 +7,98 @@
             Footprint Review - San Juan County WA
         </title>
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="css/dialog-polyfill.css">
+        <script src ="js/dialog-polyfill.js"></script>
+        <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
 
         <style>
          html, body { width: 100%; height:100%; margin:0;}
-         .map { width:49.5%; height:80%;}
-         .leaflet-control-mapId {
-             box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-             background: #fff;
-             border-radius: 5px;
-             width: 36px;
-             height: 36px;
-             text-align: center;
-         }
-         .leaflet-control-mapId-title {
-             line-height: 8px;
-         }
-         #map1 { float:left;}
-         #map2 { float:right;}
-         #footer {
-             text-align: center;
-             line-height: 18px;
-         }
+         .map { width:100%; height:300px;}
+         .options { text-align: center; }
         </style>
     </head>
 
     <body>
-        <div id="map1" class="map"></div>
-        <div id="map2" class="map"></div>
-        <div id="footer">
-            <h3>Which building footprint is better?</h3>
-            <p>Choose Map 1 if footprints are identical. Skip if the building is obscured in the photo. Flag if neither footprint is accurate.</p>
-            <button type="button" name="map1" onclick="submitVote('voteSjc')">Map 1</button>
-            <button type="button" name="skip" onclick="submitVote('voteSkip')">Skip</button>
-            <button type="button" name="flag" onclick="submitVote('voteFlag')">Flag</button>
-            <button type="button" name="map2" onclick="submitVote('votePict')">Map 2</button>
-            <p><a target="_blank" href="readme.html">What is this?</a></p>
+        <dialog class="mdl-dialog">
+            <h3 class="mdl-dialog__title">Instructions</h3>
+            <div class="mdl-dialog__content">
+                <p>Review the building footprint outline on the two maps shown. Choose the map with the better footprint.</p>
+                <p>If the building is obscured or hard to see, click the Skip button.</p>
+                <p>If neither footprint is correct, click the Flag button.</p>
+                <p>If both footprints are identical, choose Map 1.</p>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button type="button" class="mdl-button close">Got It!</button>
+            </div>
+        </dialog>
+        <div class="mdl-layout mdl-js-layout">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout-icon"></div>
+                <div class="mdl-layout__header-row">
+                    <span class="mdl-layout__title">Footprint Review</span>
+                    <div class="mdl-layout-spacer"></div>
+                    <nav class="mdl-navigation">
+                         <a id="help-nav" class="mdl-navigation__link" href="#">Help</a>
+                        <a class="mdl-navigation__link" href="readme.html" target="_blank">About</a>
+                    </nav>
+                </div>
+            </header>
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout__title">Footprint Review</span>
+                <nav class="mdl-navigation">
+                    <a id="help-drawer" class="mdl-navigation__link" href="#">Help</a>
+                    <a class="mdl-navigation__link" href="readme.html" target="_blank">About</a>
+                </nav>
+            </div>
+            <main class="mdl-layout__content">
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop mdl-cell--1-offset-desktop mdl-card mdl-shadow--4dp">
+                        <div class="mdl-card__media">
+                            <div id="map1" class="map"></div>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="map1" onclick="submitVote('voteSjc')">Map 1</button>
+                        </div>
+                    </div>
+                    <div class="options mdl-cell mdl-cell--bottom mdl-cell--1-col-desktop">
+                        <button class="opt-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="skip" onclick="submitVote('voteSkip')">Skip</button>
+                    </div>
+                    <div class="options mdl-cell mdl-cell--bottom mdl-cell--1-col-desktop">
+                        <button class="opt-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="flag" onclick="submitVote('voteFlag')">Flag</button>
+                    </div>
+                    <div class="mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop mdl-card mdl-shadow--4dp">
+                        <div class="mdl-card__media">
+                            <div id="map2" class="map"></div>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="map2" onclick="submitVote('votePict')">Map 2</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
         <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
 
         <script type="text/javascript">
+         var dialog = document.querySelector('dialog');
+         if (!dialog.showModal) {
+             dialogPolyfill.registerDialog(dialog);
+         }
+         dialog.showModal();
+
+         dialog.querySelector('.close').addEventListener('click', function() {
+             dialog.close();
+         });
+         var helpLinkNav = document.getElementById('help-nav').addEventListener('click', function() {
+             dialog.showModal();
+         });
+         var helpLinkDrawer = document.getElementById('help-drawer').addEventListener('click', function() {
+             dialog.showModal();
+         });
+
          var currentId;
          var canUseLocalStorage = storageAvailable('localStorage');
 
@@ -82,31 +134,6 @@
          }).addTo(map2);
 
          var query = locationLayer.query();
-
-         var mapIdControl = L.Control.extend({
-             options: {
-                 position: 'topright',
-                 mapId: '1'
-             },
-
-             initialize: function(options) {
-                 L.setOptions(this, options);
-             },
-
-             onAdd: function(map) {
-                 var container = L.DomUtil.create('div', 'leaflet-control-mapId');
-                 var id = L.DomUtil.create('h2', 'leaflet-control-mapId-title', container);
-                 id.innerText = this.options.mapId;
-                 return container;
-             },
-
-             onRemove: function(map) {
-                 return;
-             }
-         });
-
-         map1.addControl(new mapIdControl({ mapId: 1 }));
-         map2.addControl(new mapIdControl({ mapId: 2 }));
 
          var map1Layers = {
              "Footprint": sjcFootprintLayer,
@@ -200,9 +227,9 @@
          /**
           * This function updates the vote count for a specific key in
             localStorage.
-            * @param {vote} vote key
-            * @param {count} amount to increment the vote by (usually 1)
-            * @returns {}
+          * @param {vote} vote key
+          * @param {count} amount to increment the vote by (usually 1)
+          * @returns {}
           */
          function addVote(vote, count) {
              if (canUseLocalStorage) {
@@ -214,9 +241,9 @@
          /**
           * This function checks if Storage is available in the
             browser.
-            * @param {type} type of Storage to test, localStorage,
+          * @param {type} type of Storage to test, localStorage,
             sessionStorage, or globalStorage
-            * @returns {boolean}
+          * @returns {boolean}
           */
          function storageAvailable(type) {
 	     try {
