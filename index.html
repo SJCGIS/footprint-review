@@ -6,7 +6,7 @@
         <title>
             Footprint Review - San Juan County WA
         </title>
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
         <link rel="stylesheet" href="css/dialog-polyfill.css">
@@ -79,7 +79,7 @@
             </main>
         </div>
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-        <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
+        <script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
 
         <script type="text/javascript">
          var dialog = document.querySelector('dialog');
@@ -105,7 +105,8 @@
              minZoom: 16,
              maxZoom: 19,
              dragging: false,
-             keyboard: false
+             keyboard: false,
+             tap: false
          }
          var map1 = L.map('map1', mapOptions);
          var map2 = L.map('map2', mapOptions);
