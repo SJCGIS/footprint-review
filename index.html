@@ -58,21 +58,21 @@
                             <div id="map1" class="map"></div>
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="map1" onclick="submitVote('voteSjc')">Map 1</button>
+                            <button class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="map1" onclick="submitVote('voteSjc')">Map 1</button>
                         </div>
                     </div>
                     <div class="options mdl-cell mdl-cell--bottom mdl-cell--4-col mdl-cell--6-col-desktop">
-                        <button class="opt-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="skip" onclick="submitVote('voteSkip')">Skip</button>
+                        <button class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="skip" onclick="submitVote('voteSkip')">Skip</button>
                     </div>
                     <div class="options mdl-cell mdl-cell--bottom mdl-cell--4col mdl-cell--6-col-desktop">
-                        <button class="opt-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="flag" onclick="submitVote('voteFlag')">Flag</button>
+                        <button class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="flag" onclick="submitVote('voteFlag')">Flag</button>
                     </div>
                     <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone mdl-card mdl-shadow--4dp">
                         <div class="mdl-card__media">
                             <div id="map2" class="map"></div>
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
-                            <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="map2" onclick="submitVote('votePict')">Map 2</button>
+                            <button  class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="map2" onclick="submitVote('votePict')">Map 2</button>
                         </div>
                     </div>
                 </div>
@@ -164,6 +164,7 @@
                  var sjcId = fc.features[0].properties.SJC_Footprints_OBJECTID;
                  var pictId = fc.features[0].properties.PICT_Footprints_OBJECTID;
                  drawFootprints(loc, sjcId, pictId);
+                 enableVoting();
              });
          };
 
@@ -190,6 +191,7 @@
           * @returns {}
           */
          function submitVote(vote) {
+             disableVoting();
              query.where("OBJECTID = " + currentId);
              query.run(function(err, fc, res) {
                  if (err) throw new Error(err.message);
@@ -256,6 +258,20 @@
 	     catch(e) {
 		 return false;
 	     }
+         }
+
+         function disableVoting() {
+             var voteButtons = document.querySelectorAll('.vote-button');
+             for (var i = 0; i < voteButtons.length; i++) {
+                 voteButtons[i].disabled = true;
+             }
+         }
+
+         function enableVoting() {
+             var voteButtons = document.querySelectorAll('.vote-button');
+             for (var i = 0; i < voteButtons.length; i++) {
+                 voteButtons[i].disabled = false;
+             }
          }
 
          getRandomFootprint(1,18772);
