@@ -82,6 +82,7 @@
         <script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
 
         <script type="text/javascript">
+         var proxyUrl = '/proxy/proxy.ashx';
          var dialog = document.querySelector('dialog');
          if (!dialog.showModal) {
              dialogPolyfill.registerDialog(dialog);
@@ -124,13 +125,16 @@
          layer2.addTo(map2);
 
          var locationLayer = L.esri.Services.featureLayerService({
-             url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/0'
+             url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/0',
+             proxy: proxyUrl
          });
          var sjcFootprintLayer = L.esri.featureLayer({
-             url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/1'
+             url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/1',
+             proxy: proxyUrl
          }).addTo(map1);
          var pictFootprintLayer = L.esri.featureLayer({
-             url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/2'
+             url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/2',
+             proxy: proxyUrl
          }).addTo(map2);
 
          var query = locationLayer.query();
