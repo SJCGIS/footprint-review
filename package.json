@@ -1,0 +1,23 @@
+{
+  "name": "footprint-review",
+  "version": "1.0.0",
+  "description": "A simple web application for comparing and voting for the best building\r footprint from two sources in San Juan County, WA.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SJCGIS/footprint-review.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SJCGIS/footprint-review/issues"
+  },
+  "homepage": "https://github.com/SJCGIS/footprint-review#readme",
+  "dependencies": {
+    "esri-leaflet": "^1.0.3",
+    "leaflet": "^0.7.7"
+  }
+}
