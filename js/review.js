@@ -3,6 +3,25 @@ var FootprintMap = require('./map');
 module.exports = Review;
 
 function Review() {
+    var voteOpts = {
+        "voteSjc": {
+            "field": "SJC_VOTES",
+            "storageId": "voteSjc"
+        },
+        "votePict": {
+            "field": "PICT_VOTES",
+            "storageId": "votePict"
+        },
+        "voteSkip": {
+            "field": "SKIPS",
+            "storageId": "voteSkip"
+        },
+        "voteFlag": {
+            "field": "FLAGS",
+            "storageId": "voteFlag"
+        }
+    };
+
     var map1 = FootprintMap({'mapId': 'map1'});
     var map2 = FootprintMap({'mapId': 'map2'});
     var currentId;
@@ -74,7 +93,7 @@ function Review() {
 
     /**
      * This function queries the service and passes the result
-     to the footprintHandler
+     to the callback function
      * @param {query} the query service used
      * @param {oid} the object id to query for
      * @param {callback} the callback function to call when
@@ -82,9 +101,19 @@ query is complete
      */
     function getFootprint(query, oid, callback) {
         query.where("OBJECTID = " + oid);
-        query.run(function footprintHandler(err, fc) {
+        query.run(function(err, fc) {
             if (err) throw new Error(err.message);
             callback(fc);
         });
+    }
+
+    function submitVote(vote) {
+        getFootprint(query, currentId, function(fc) {
+            voteHandler(vote, fc);
+        });
+    }
+
+    function voteHandler(vote, fc) {
+
     }
 }

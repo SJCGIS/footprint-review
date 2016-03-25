@@ -4,8 +4,8 @@
   "description": "A simple web application for comparing and voting for the best building\r footprint from two sources in San Juan County, WA.",
   "main": "index.js",
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "run" : "budo index.js --live --serve bundle.js"
+    "test": "browserify test/test.js | tape-run",
+    "start": "budo index.js --live --serve bundle.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,12 @@
   "homepage": "https://github.com/SJCGIS/footprint-review#readme",
   "dependencies": {
     "esri-leaflet": "^1.0.3",
+    "inherits": "^2.0.1",
     "leaflet": "^0.7.7"
+  },
+  "devDependencies": {
+    "tap-spec": "^4.1.1",
+    "tape": "^4.5.1",
+    "tape-run": "^2.1.3"
   }
 }
