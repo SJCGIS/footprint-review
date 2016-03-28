@@ -6,17 +6,34 @@ var inherits = require('inherits');
 module.exports = Service;
 
 function Service(opts) {
-    EventEmitter.call(this);
-    var service = L.esri.Services.featureLayerService({
-        url: opts.url,
-        proxy: opts.proxy || '',
-        token: opts.token || ''
-    }).query();
+  var self = this;
+  EventEmitter.call(this);
+  var service = L.esri.Services.featureLayerService({
+    url: opts.url,
+    proxy: opts.proxy || '',
+    token: opts.token || ''
+  });
+  var query = service.query();
 
-    this.getFeatures = function(oid, callback) {
-        service.where("OBJECTID=" + oid);
-        service.run(callback);
-    };
+  var oId = opts.oId || null;
+
+  this.getFeatures = function(callback, context) {
+    query.where("OBJECTID=" + this.oId());
+    query.run(callback);
+  };
+
+  this.service = function() {
+    return service;
+  };
+
+  this.setoId = function(newoId) {
+    oId = newoId;
+    self.emit('service::oIdChange', newoId);
+  };
+
+  this.oId = function() {
+    return oId;
+  };
 }
 
 inherits(Service, EventEmitter);

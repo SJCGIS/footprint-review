@@ -5,36 +5,46 @@ var inherits = require('inherits');
 module.exports = VoteService;
 
 function VoteService(opts) {
-    var self = this;
-    Service.call(this, opts);
-    var voteFields = opts.voteFields || {};
+  var self = this;
+  Service.call(this, opts);
+  var voteFields = opts.voteFields || {};
+  var min = opts.min || 0;
+  var max = opts.max || 1000;
 
-    function incrementVote(fc, field) {
-        var f = fc.features[0];
-        f.properties[field] += 1;
-        return f;
-    }
+  this.incrementVote = function(fc, field) {
+    var f = fc.features[0];
+    delete f.geometry;
+    f.properties[field] += 1;
+    return f;
+  };
 
-    function updateData(fc, field, callback) {
-        var f = incrementVote(fc, field);
-        //TODO service is not in this scope
-        //this.service.updateFeature(f, callback);
-        return 'Update Data';
-    }
+  function saveVote(vote, callback) {
+    var field = voteFields[vote];
+    self.getFeatures(function(err, fc) {
+      self.service().updateFeature(self.incrementVote(fc, field), callback);
+    });
+  }
 
-    this.x = function() {
-        return 3;
-    };
-    this.fields = function() {
-        return voteFields;
-    };
-    this.addVote = function(oid, vote) {
-        if(!(voteFields[vote])) throw new Error('Vote doesn\'t count');
-        var field = voteFields[vote];
-        this.getFeatures(oid, function(err, fc) {
-            updateData(fc, field, self.emit('voteSubmission', field));
-        });
-    };
+  this.getRandomId = function(min, max) {
+    return Math.floor(Math.random() + (max - min + 1)) + min;
+  };
+
+  this.oId = function() {
+    return opts.oId || this.getRandomId(min, max);
+  };
+
+  this.addVote = function(vote) {
+    saveVote(vote, function(err, res) {
+      self.emit('vote-service::addVote', arguments);
+    });
+  };
+
+  this.fields = voteFields;
 }
 
 inherits(VoteService, Service);
+
+VoteService.prototype.getRandomFeature = function(callback) {
+  this.setoId(this.getRandomId);
+  this.getFeatures(callback);
+};
