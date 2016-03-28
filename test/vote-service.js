@@ -16,7 +16,7 @@ test('vote-service', function(ttt) {
   var service = new VoteService(opts);
   ttt.test('with oId specified' , function(tt) {
     tt.test('voteFields options', function(t) {
-      t.equal(service.fields, opts.voteFields, 'voteFields set correctly');
+      t.equal(service.voteFields, opts.voteFields, 'voteFields set correctly');
       t.end();
     });
     tt.test('get random feature', function(t) {
@@ -27,23 +27,12 @@ test('vote-service', function(ttt) {
       });
     });
     tt.test('addVote', function(t) {
-      service.on('vote-service::addVote', function(data) {
-        t.ifError(data[0], 'no error');
-        t.ok(data[1].success, 'vote successful');
-        t.equal(data[1].objectId, 222, 'emits response');
+      service.on('vote-service::addVote', function(res) {
+        t.ok(res.success, 'vote successful');
+        t.equal(res.objectId, 222, 'emits correct response');
         t.end();
       });
       service.addVote('voteSjc');
     });
   });
-  // tt.test('emitter', function(t) {
-  //   var res = 0;
-  //   service.on('voteSubmitted', function() {
-  //     res = 1;
-  //   });
-  //   service.addVote(212, 'voteSjc', function() {
-  //     t.equal(res, 1, 'add vote emits successfully');
-  //     t.end();
-  //   });
-  // });
 });
