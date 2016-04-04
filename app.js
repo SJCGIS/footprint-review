@@ -1,10 +1,15 @@
 var VoteService = require('./js/vote-service');
 var Service = require('./js/service');
 var FootprintMap = require('./js/map');
+var Store = require('./js/storage');
 
 module.exports = App;
 
 function App() {
+    var store = new Store('footprint-review', function(store) {
+        return;
+    });
+
     var map1 = new FootprintMap({
         mapId: 'map1'
     });
@@ -57,8 +62,9 @@ function App() {
         });
     });
 
-    fpService.on('vote-service::addVote', function() {
-        return getNew();
+    fpService.on('vote-service::addVote', function(vote) {
+        store.upVote(vote, store.getVotes());
+        store.upVote('totalVote', getNew());
     });
 
     var disableVoting = function() {

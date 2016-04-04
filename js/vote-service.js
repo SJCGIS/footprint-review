@@ -38,7 +38,8 @@ function VoteService(opts) {
     this.addVote = function(vote) {
         saveVote(vote, function(err, res) {
             if (err) throw err;
-            self.emit('vote-service::addVote', res);
+            self.emit('vote-service::addVote', vote);
+            self.emit('vote-service::saveVote', res);
         });
     };
 
