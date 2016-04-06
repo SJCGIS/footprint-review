@@ -1,4 +1,3 @@
-var events = require('events');
 var Service = require('./service');
 var inherits = require('inherits');
 
