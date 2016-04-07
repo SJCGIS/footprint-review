@@ -4,3 +4,4 @@ require('./vote-service');
 //require('./empty-storage');
 require('./storage-migration'); // run separate from other storage tests
 require('./achievement');
+require('./achievement-viewer');

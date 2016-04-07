@@ -21,13 +21,16 @@ function Achievement(id, opts) {
     var challenge = opts.challenge || ['==', 0, 1];
     var filter = ff(challenge);
     var locked = true; //locked by default
-    if (localStorage.getItem(this.id) !== null) locked = false; //unlocked if in localStorage
+    if (localStorage.getItem(this.id) !== null ||
+        opts.locked === false) {
+        locked = false;
+    }
 
     var store = function() {
         localStorage.setItem(self.id, String(self.isUnlocked()));
     };
 
-    this.runChallenge = function(e) {
+    this.runChallenge = function() {
         var k = String(challenge[1]);
         var vStr = localStorage.getItem(k);
         var v = isNaN(parseInt(vStr, 10)) ? vStr : parseInt(vStr, 10);

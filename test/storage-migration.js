@@ -1,12 +1,12 @@
 var test = require('tape');
 var Store = require('../js/storage');
 
-window.localStorage.clear();
-window.localStorage.setItem('totalVotes', 500);
-window.localStorage.setItem('voteSjc', 125);
-window.localStorage.setItem('votePict', 125);
-window.localStorage.setItem('voteFlag', 125);
-window.localStorage.setItem('voteSkip', 125);
+localStorage.clear();
+localStorage.setItem('totalVotes', 500);
+localStorage.setItem('voteSjc', 125);
+localStorage.setItem('votePict', 125);
+localStorage.setItem('voteFlag', 125);
+localStorage.setItem('voteSkip', 125);
 
 
 var st = Store('migrated-storage', function(err, store) {

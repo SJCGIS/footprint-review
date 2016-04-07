@@ -2,12 +2,23 @@ var VoteService = require('./js/vote-service');
 var Service = require('./js/service');
 var FootprintMap = require('./js/map');
 var Store = require('./js/storage');
+var config = require('./js/config');
+var AchievementViewer = require('./js/achievement-viewer');
 
 module.exports = App;
 
 function App() {
     var store = new Store('footprint-review', function(store) {
         return;
+    });
+    var body = document.querySelector('body');
+    var achievementViewer = new AchievementViewer(config.achievements);
+    body.appendChild(achievementViewer);
+
+    var achievementNav = document.getElementById('achievement-nav');
+    achievementNav.addEventListener('click', function(e) {
+        e.preventDefault();
+        achievementViewer.showModal();
     });
 
     var map1 = new FootprintMap({
