@@ -5,9 +5,15 @@ var Achievement = require('./achievement');
 
 module.exports = AchievementViewer;
 
-function AchievementViewer(achievements) {
-    this.achievements = achievements.map(function(item) {
-        return new Achievement(item.id, item.opts);
+function AchievementViewer(list, parentEl) {
+    var self = this;
+
+    this.achievements = list.map(function(item) {
+        var achievement = new Achievement(item.id, item.opts);
+        achievement.on('achievement::unlocked', function(e) {
+            update();
+        });
+        return achievement;
     });
 
     var el = render(this.achievements);
@@ -15,11 +21,20 @@ function AchievementViewer(achievements) {
         el.close();
     });
     if (!el.showModal) dialogPolyfill.registerDialog(el);
-    return el;
+    parentEl.appendChild(el);
+
+    this.el = function() {
+        return el;
+    };
+
+    function update() {
+        var newEl = render(self.achievements);
+        yo.update(el, newEl);
+    };
 
     function render(achievements) {
         return yo`
-<dialog class="achievementsDialog mdl-dialog">
+<dialog class="${styles.achievementsDialog} mdl-dialog">
 <h4 class="mdl-dialog__title">Achievements</h4>
 <div class="mdl-dialog__content">
 ${gridify(achievements, 3).map(function(card) {

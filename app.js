@@ -12,13 +12,18 @@ function App() {
         return;
     });
     var body = document.querySelector('body');
-    var achievementViewer = new AchievementViewer(config.achievements);
-    body.appendChild(achievementViewer);
+    var achievementViewer = new AchievementViewer(config.achievements, body);
 
     var achievementNav = document.getElementById('achievement-nav');
     achievementNav.addEventListener('click', function(e) {
         e.preventDefault();
-        achievementViewer.showModal();
+        achievementViewer.el().showModal();
+    });
+
+    var achievementDrawer = document.getElementById('achievement-drawer');
+    achievementDrawer.addEventListener('click', function(e) {
+        e.preventDefault();
+        achievementViewer.el().showModal();
     });
 
     var map1 = new FootprintMap({

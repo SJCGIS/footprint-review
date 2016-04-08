@@ -1,16 +1,17 @@
 var test = require('tape');
 var Achievement = require('../js/achievement');
+var achievements = require('./fixtures/achievements');
 
 localStorage.clear();
-localStorage.setItem('test2', '2');
-localStorage.setItem('test3', '3');
-localStorage.setItem('test4', 'frog');
-localStorage.setItem('test5', 'rabbit');
+localStorage.setItem('cat', '2');
+localStorage.setItem('robot', '0');
+localStorage.setItem('world', 'evil');
+localStorage.setItem('dog', 'woof');
 localStorage.setItem('a6', 'true');
 
 
 test('default achievement options', function(t) {
-    var achievement = new Achievement('a1');
+    var achievement = new Achievement(achievements[0].id, achievements[0].opts);
     t.notOk(achievement.runChallenge(), 'default challenge is bad');
     t.notOk(achievement.isUnlocked(), 'locked by default');
     achievement.unlock(function() {
@@ -21,9 +22,7 @@ test('default achievement options', function(t) {
 });
 
 test('good number challenge', function(t) {
-    var achievement = new Achievement('a2', {
-        challenge: [">", 'test2', 1]
-    });
+    var achievement = new Achievement(achievements[1].id, achievements[1].opts);
     achievement.on('achievement::unlocked', function(id) {
         t.equal(id, 'a2', 'achievement emits unlocked event');
     });
@@ -38,9 +37,7 @@ test('good number challenge', function(t) {
 });
 
 test('bad number challenge', function(t) {
-    var achievement = new Achievement('a3', {
-        challenge: ["<", 'test3', 2]
-    });
+    var achievement = new Achievement(achievements[2].id, achievements[2].opts);
     t.notOk(achievement.runChallenge(), 'bad challenge is assigned');
     t.notOk(achievement.isUnlocked(), 'is initially locked');
     achievement.unlock(function() {
@@ -51,9 +48,7 @@ test('bad number challenge', function(t) {
 });
 
 test('good string challenge', function(t) {
-    var achievement = new Achievement('a4', {
-        challenge: ["==", 'test4', 'frog']
-    });
+    var achievement = new Achievement(achievements[3].id, achievements[3].opts);
     t.notOk(achievement.isUnlocked(),'is initially locked');
     achievement.on('achievement::unlocked', function(id) {
         t.equal(id, 'a4', 'achievement emits unlocked event');
@@ -68,9 +63,7 @@ test('good string challenge', function(t) {
 });
 
 test('bad string challenge', function(t) {
-    var achievement = new Achievement('a5', {
-        challenge: ["==", 'test5', 'lizard']
-    });
+    var achievement = new Achievement(achievements[4].id, achievements[4].opts);
     t.notOk(achievement.runChallenge(), 'bad challenge is assigned');
     t.notOk(achievement.isUnlocked(), 'is initially locked');
     achievement.unlock(function() {
@@ -81,7 +74,7 @@ test('bad string challenge', function(t) {
 });
 
 test('unlocked in localStorage', function(t) {
-    var achievement = new Achievement('a6');
+    var achievement = new Achievement(achievements[5].id, achievements[5].opts);
     t.ok(achievement.isUnlocked(), 'unlocked by being in localStorage');
     t.end();
 });
