@@ -83,3 +83,11 @@ ${achievement.opts.subtitle}
 
     }
 }
+
+AchievementViewer.prototype.checkAchievements = function() {
+    this.achievements.forEach(function(achievement) {
+        achievement.unlock(function(done) {
+            return;
+        });
+    });
+};
