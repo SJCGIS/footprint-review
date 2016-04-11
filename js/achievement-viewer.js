@@ -1,5 +1,4 @@
 var yo = require('yo-yo');
-var csjs = require('csjs');
 var dialogPolyfill = require('dialog-polyfill');
 var Achievement = require('./achievement');
 
@@ -34,7 +33,7 @@ function AchievementViewer(list, parentEl) {
 
     function render(achievements) {
         return yo`
-<dialog class="${styles.achievementsDialog} mdl-dialog">
+<dialog class="achievement-dialog mdl-dialog">
 <h4 class="mdl-dialog__title">Achievements</h4>
 <div class="mdl-dialog__content">
 ${gridify(achievements, 3).map(function(card) {
@@ -72,7 +71,7 @@ return cardify(card);
 
     function cardify(achievement) {
         return yo`
-<div class="${styles.achievementCard} mdl-cell mdl-cell-4-col mdl-card mdl-shadow--4dp">
+<div class="achievement-card mdl-cell mdl-cell-4-col mdl-card mdl-shadow--4dp">
 <div class="mdl-card__title">
 <h2 class="mdl-card__title-text">${achievement.opts.title}</h2>
 </div>
@@ -84,15 +83,3 @@ ${achievement.opts.subtitle}
 
     }
 }
-
-var styles = module.exports.styles = csjs`
-.achievementsDialog {
-width: 75%;
-}
-.achievementCard.mdl-card {
-width: 320px;
-height: 320px;
-}
-.achievementCard > .mdl-card__title {
-background: #white
-`;
