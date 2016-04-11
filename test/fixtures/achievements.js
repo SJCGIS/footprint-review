@@ -1,37 +1,37 @@
 module.exports = [
     {
-        id: 'a1',
+        id: 'emptyCard',
         opts: {}
     }, {
-        id: 'a2',
+        id: 'catCard',
         opts: {
             title: 'Cat Acquired',
             subtitle: 'You have adopted a cat',
             challenge: ['>=', 'cat', 1]
         }
     }, {
-        id: 'a3',
+        id: 'robotCard',
         opts: {
             title: 'I am a robot',
             subtitle: 'beep boop',
             challenge: ['==', 'robot', 1]
         }
     }, {
-        id: 'a4',
+        id: 'pandoraCard',
         opts: {
             title: 'Pandora\'s Box',
             subtitle: 'The box has been opened',
             challenge: ['==', 'world', 'evil']
         }
     }, {
-        id: 'a5',
+        id: 'dogCard',
         opts: {
             title: 'Dog',
             subtitle: 'The dog woofed',
             challenge: ['==', 'dog', 'bark']
         }
     }, {
-        id: 'a6',
+        id: 'humanCard',
         opts: {
             title: 'Human Being',
             subtitle: 'You were born!',

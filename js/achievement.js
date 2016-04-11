@@ -27,7 +27,7 @@ function Achievement(id, opts) {
     }
 
     var store = function() {
-        localStorage.setItem(self.id, String(locked));
+        localStorage.setItem(self.id, String(self.isUnlocked()));
     };
 
     this.runChallenge = function() {
