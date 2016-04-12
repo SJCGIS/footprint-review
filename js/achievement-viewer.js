@@ -9,6 +9,7 @@ function AchievementViewer(list, parentEl) {
 
     this.achievements = list.map(function(item) {
         var achievement = new Achievement(item.id, item.opts);
+        achievement.unlock();
         achievement.on('achievement::unlocked', function(e) {
             update();
         });
@@ -86,8 +87,6 @@ ${achievement.opts.subtitle}
 
 AchievementViewer.prototype.checkAchievements = function() {
     this.achievements.forEach(function(achievement) {
-        achievement.unlock(function(done) {
-            return;
-        });
+        achievement.unlock();
     });
 };

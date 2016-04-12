@@ -43,13 +43,12 @@ function Achievement(id, opts) {
         return !locked;
     };
 
-    this.unlock = function(callback) {
+    this.unlock = function() {
         if (!this.isUnlocked() && this.runChallenge()) {
             locked = false;
             store();
             self.emit('achievement::unlocked', self.id);
         }
-        callback();
     };
 }
 

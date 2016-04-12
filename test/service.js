@@ -17,7 +17,6 @@ test('service', function(ttt) {
   ttt.test('service with defined oId', function(tt) {
     tt.test('getFeatures', function(t){
       service.getFeatures(function(err, res) {
-        console.log(arguments);
         t.ifError(err, 'no error');
         t.equal(res.features[0].id, 222, 'correct object id returned');
         t.end();

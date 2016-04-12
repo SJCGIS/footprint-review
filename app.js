@@ -1,17 +1,13 @@
 var VoteService = require('./js/vote-service');
 var Service = require('./js/service');
 var FootprintMap = require('./js/map');
-var Store = require('./js/storage');
 var config = require('./js/config');
 var AchievementViewer = require('./js/achievement-viewer');
 
 module.exports = App;
 
 function App() {
-    var store = new Store('footprint-review', function(store) {
-        return;
-    });
-    var body = document.querySelector('body');
+    var body = document.body;
     var achievementViewer = new AchievementViewer(config.achievements, body);
 
     var achievementNav = document.getElementById('achievement-nav');
@@ -79,8 +75,10 @@ function App() {
     });
 
     fpService.on('vote-service::addVote', function(vote) {
-        store.upVote(vote, store.getVotes());
-        store.upVote('totalVote', getNew());
+        upVoteLocalStorage(vote);
+        upVoteLocalStorage('totalVotes');
+        achievementViewer.checkAchievements();
+        getNew();
     });
 
     var disableVoting = function() {
@@ -93,6 +91,11 @@ function App() {
         for(var i = 0; i < buttons.length; i++) {
             buttons[i].disabled = false;
         };
+    };
+
+    var upVoteLocalStorage = function(item) {
+        var pVal = localStorage.getItem(item) || 0;
+        localStorage.setItem(item, parseInt(pVal) + 1);
     };
 
     var getNew = function() {
