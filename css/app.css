@@ -1,0 +1,19 @@
+html, body { width: 100%; height:100%; margin:0;}
+.map { width:100%; height:300px;}
+.options { text-align: center; }
+.achievement-dialog { width: 75%; }
+
+/* Achievement Cards */
+
+.achievement-card {
+  width: 250px;
+  height: 250px;
+}
+
+.achievement-card__default .mdl-card__title {
+  background: url("../img/stars.png") center/60% no-repeat #46B5AC;
+}
+
+.achievement-card__newbie .mdl-card__title {
+  background: url("../img/baby.png") center/60% no-repeat #46B5AC;
+}

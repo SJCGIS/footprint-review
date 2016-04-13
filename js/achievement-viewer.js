@@ -72,8 +72,8 @@ return cardify(card);
 
     function cardify(achievement) {
         return yo`
-<div class="achievement-card mdl-cell mdl-cell-4-col mdl-card mdl-shadow--4dp">
-<div class="mdl-card__title">
+<div class="${achievement.opts.className} achievement-card mdl-cell mdl-cell-4-col mdl-card mdl-shadow--4dp">
+<div class="mdl-card__title mdl-card--expand">
 <h2 class="mdl-card__title-text">${achievement.opts.title}</h2>
 </div>
 <div class="mdl-card__supporting-text">

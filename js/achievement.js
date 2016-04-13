@@ -14,7 +14,7 @@ function Achievement(id, opts) {
     this.opts = {
         title: opts.title || 'New Achievement',
         subtitle: opts.subtitle || '',
-        background: opts.background || "#3E4EB8"
+        className: opts.className || 'achievement-card__default'
     };
 
     var self = this;

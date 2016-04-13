@@ -5,7 +5,8 @@ module.exports.achievements = [
             title: 'Newbie',
             subtitle: 'You\'ve reviewed at least ten footprints!',
             challenge: ['>=', 'totalVotes', 10],
-            locked: false
+            locked: false,
+            className: 'achievement-card__newbie'
         }
     },
     {

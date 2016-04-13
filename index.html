@@ -10,17 +10,10 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="/node_modules/material-design-lite/material.min.css" />
         <link rel="stylesheet" href="css/dialog-polyfill.css">
+        <link rel="stylesheet" href="css/app.css"/>
         <script src ="js/dialog-polyfill.js"></script>
         <script defer src="/node_modules/material-design-lite/material.min.js"></script>
-
-        <style>
-         html, body { width: 100%; height:100%; margin:0;}
-         .map { width:100%; height:300px;}
-         .options { text-align: center; }
-         .achievement-dialog { width: 75%; }
-        </style>
     </head>
-
     <body>
         <dialog class="mdl-dialog">
             <h3 class="mdl-dialog__title">Instructions</h3>
@@ -34,6 +27,10 @@
                 <button type="button" class="mdl-button close">Got It!</button>
             </div>
         </dialog>
+        <div id="achievement-toast" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
