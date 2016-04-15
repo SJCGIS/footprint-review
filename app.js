@@ -81,6 +81,12 @@ function App() {
         getNew();
     });
 
+  fpService.on('vote-service::saveVote', function(res) {
+    if(res.success) {
+      localStorage.setItem('lastId', res.objectId);
+    }
+  });
+
     var disableVoting = function() {
         for(var i = 0; i < buttons.length; i++) {
             buttons[i].disabled = true;
