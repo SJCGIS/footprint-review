@@ -13,18 +13,12 @@
         <meta property="og:image" content="http://sjcgis.org/footprint-review/img/footprint-review-medium.png" />
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="/node_modules/material-design-lite/material.min.css" />
         <link rel="stylesheet" href="css/dialog-polyfill.css">
+        <link rel="stylesheet" href="css/app.css"/>
         <script src ="js/dialog-polyfill.js"></script>
-        <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
-
-        <style>
-         html, body { width: 100%; height:100%; margin:0;}
-         .map { width:100%; height:300px;}
-         .options { text-align: center; }
-        </style>
+        <script defer src="/node_modules/material-design-lite/material.min.js"></script>
     </head>
-
     <body>
         <dialog class="mdl-dialog">
             <h3 class="mdl-dialog__title">Instructions</h3>
@@ -38,14 +32,19 @@
                 <button type="button" class="mdl-button close">Got It!</button>
             </div>
         </dialog>
+        <div id="achievement-toast" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
                     <span class="mdl-layout__title">Footprint Review</span>
                     <div class="mdl-layout-spacer"></div>
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
-                         <a id="help-nav" class="mdl-navigation__link" href="#">Help</a>
+                        <a id="help-nav" class="mdl-navigation__link" href="#">Help</a>
                         <a class="mdl-navigation__link" href="readme.html" target="_blank">About</a>
+                        <a id="achievement-nav" class="mdl-navigation__link" href="#">Achievements</a>
                     </nav>
                 </div>
             </header>
@@ -54,6 +53,7 @@
                 <nav class="mdl-navigation">
                     <a id="help-drawer" class="mdl-navigation__link" href="#">Help</a>
                     <a class="mdl-navigation__link" href="readme.html" target="_blank">About</a>
+                    <a id="achievement-drawer" class="mdl-navigation__link" href="#">Achievements</a>
                 </nav>
             </div>
             <main class="mdl-layout__content">
@@ -62,228 +62,236 @@
                         <div class="mdl-card__media">
                             <div id="map1" class="map"></div>
                         </div>
-                        <div class="mdl-card__actions mdl-card--border">
-                            <button class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="map1" onclick="submitVote('voteSjc')">Map 1</button>
+                        <div class="mdl-card__title mdl-card--border">
+                            <h3 class="mdl-card__title-text">Map 1</h3>
                         </div>
                     </div>
-                    <div class="options mdl-cell mdl-cell--bottom mdl-cell--4-col mdl-cell--6-col-desktop">
-                        <button class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="skip" onclick="submitVote('voteSkip')">Skip</button>
+                    <div class="options mdl-cell mdl-cell--bottom mdl-cell--2-col">
+                        <button class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="voteSjc">Map 1</button>
                     </div>
-                    <div class="options mdl-cell mdl-cell--bottom mdl-cell--4col mdl-cell--6-col-desktop">
-                        <button class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="flag" onclick="submitVote('voteFlag')">Flag</button>
+                    <div class="options mdl-cell mdl-cell--bottom mdl-cell--2-col">
+                        <button  class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="votePict">Map 2</button>
                     </div>
+                    <div class="options mdl-cell mdl-cell--bottom mdl-cell--2-col">
+                        <button class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="voteSkip">Skip</button>
+                    </div>
+                    <div class="options mdl-cell mdl-cell--bottom mdl-cell--2-col">
+                        <button class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--accent" type="button" name="voteFlag">Flag</button>
+                    </div>
+
                     <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone mdl-card mdl-shadow--4dp">
                         <div class="mdl-card__media">
                             <div id="map2" class="map"></div>
                         </div>
-                        <div class="mdl-card__actions mdl-card--border">
-                            <button  class="vote-button mdl-button mdl-js-button mdl-button--raised mdl-js-rippleeffot mdl-button--primary" type="button" name="map2" onclick="submitVote('votePict')">Map 2</button>
+                        <div class="mdl-card__title mdl-card--border">
+                            <h3 class="mdl-card__title-text">Map 2</h3>
                         </div>
                     </div>
                 </div>
             </main>
         </div>
-        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-        <script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
+        <!-- <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script> -->
+        <!-- <script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script> -->
+        <script src="bundle.js"></script>
 
-        <script type="text/javascript">
-         var proxyUrl = '/proxy/proxy.ashx';
-         var dialog = document.querySelector('dialog');
-         if (!dialog.showModal) {
+        <!--        <script type="text/javascript">
+             var proxyUrl = '/proxy/proxy.ashx';
+             var dialog = document.querySelector('dialog');
+             if (!dialog.showModal) {
              dialogPolyfill.registerDialog(dialog);
-         }
-         dialog.showModal();
+             }
+             dialog.showModal();
 
-         dialog.querySelector('.close').addEventListener('click', function() {
+             dialog.querySelector('.close').addEventListener('click', function() {
              dialog.close();
-         });
-         var helpLinkNav = document.getElementById('help-nav').addEventListener('click', function() {
+             });
+             var helpLinkNav = document.getElementById('help-nav').addEventListener('click', function() {
              dialog.showModal();
-         });
-         var helpLinkDrawer = document.getElementById('help-drawer').addEventListener('click', function() {
+             });
+             var helpLinkDrawer = document.getElementById('help-drawer').addEventListener('click', function() {
              dialog.showModal();
-         });
+             });
 
-         var currentId;
-         var canUseLocalStorage = storageAvailable('localStorage');
+             var currentId;
+             var canUseLocalStorage = storageAvailable('localStorage');
 
-         var mapOptions = {
+             var mapOptions = {
              minZoom: 16,
              maxZoom: 19,
              dragging: false,
              keyboard: false,
              tap: false
-         }
-         var map1 = L.map('map1', mapOptions);
-         var map2 = L.map('map2', mapOptions);
+             }
+             var map1 = L.map('map1', mapOptions);
+             var map2 = L.map('map2', mapOptions);
 
-         var layer1 = L.esri.tiledMapLayer({
+             var layer1 = L.esri.tiledMapLayer({
              url: 'https://sjcgis.org/arcgis/rest/services/Basemaps/Aerials_2013_WM/MapServer',
              maxZoom: 19
-         });
-         layer1.addTo(map1);
+             });
+             layer1.addTo(map1);
 
-         var layer2 = L.esri.tiledMapLayer({
+             var layer2 = L.esri.tiledMapLayer({
              url: 'https://sjcgis.org/arcgis/rest/services/Basemaps/Aerials_2013_WM/MapServer',
              maxZoom: 19
-         });
-         layer2.addTo(map2);
+             });
+             layer2.addTo(map2);
 
-         var locationLayer = L.esri.Services.featureLayerService({
+             var locationLayer = L.esri.Services.featureLayerService({
              url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/0',
              proxy: proxyUrl
-         });
-         var sjcFootprintLayer = L.esri.featureLayer({
+             });
+             var sjcFootprintLayer = L.esri.featureLayer({
              url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/1',
              proxy: proxyUrl
-         }).addTo(map1);
-         var pictFootprintLayer = L.esri.featureLayer({
+             }).addTo(map1);
+             var pictFootprintLayer = L.esri.featureLayer({
              url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/2',
              proxy: proxyUrl
-         }).addTo(map2);
+             }).addTo(map2);
 
-         var query = locationLayer.query();
+             var query = locationLayer.query();
 
-         var map1Layers = {
+             var map1Layers = {
              "Footprint": sjcFootprintLayer,
              "Aerial": layer1
-         };
-         L.control.layers(null, map1Layers).addTo(map1);
+             };
+             L.control.layers(null, map1Layers).addTo(map1);
 
-         var map2Layers = {
+             var map2Layers = {
              "Footprint": pictFootprintLayer,
              "Aerial": layer2
-         };
-         L.control.layers(null, map2Layers).addTo(map2);
+             };
+             L.control.layers(null, map2Layers).addTo(map2);
 
 
-         /**
-          * This function finds a random compare location and passes the
-            footprint IDs to the drawFootprints function.
-          * @param {min} minimum inclusive feature id for random function
-          * @param {max} maximum inclusive feature id for random function
-          * @returns {}
-          */
-         function getRandomFootprint(min, max) {
+             /**
+             * This function finds a random compare location and passes the
+             footprint IDs to the drawFootprints function.
+             * @param {min} minimum inclusive feature id for random function
+             * @param {max} maximum inclusive feature id for random function
+             * @returns {}
+             */
+             function getRandomFootprint(min, max) {
              currentId = Math.floor(Math.random() * (max- min + 1)) + min;
              query.where("OBJECTID = " + currentId);
              query.run(function(err, fc, res) {
-                 if (err) throw new Error(err.message);
-                 var loc = fc.features[0].geometry.coordinates;
-                 var sjcId = fc.features[0].properties.SJC_Footprints_OBJECTID;
-                 var pictId = fc.features[0].properties.PICT_Footprints_OBJECTID;
-                 drawFootprints(loc, sjcId, pictId);
-                 enableVoting();
+             if (err) throw new Error(err.message);
+             var loc = fc.features[0].geometry.coordinates;
+             var sjcId = fc.features[0].properties.SJC_Footprints_OBJECTID;
+             var pictId = fc.features[0].properties.PICT_Footprints_OBJECTID;
+             drawFootprints(loc, sjcId, pictId);
+             enableVoting();
              });
-         };
+             };
 
-         /**
-          * This function modifies the `where` parameter on the footprint
-            layers and centers the maps on the location
-          * @param {loc} coordinates to center the maps
-          * @param {sjcId} feature id for the SJC footprints
-          * @param {pictId} feature id for the Pictometry footprints
-          * @returns {}
-          */
-         function drawFootprints(loc, sjcId, pictId) {
+             /**
+             * This function modifies the `where` parameter on the footprint
+             layers and centers the maps on the location
+             * @param {loc} coordinates to center the maps
+             * @param {sjcId} feature id for the SJC footprints
+             * @param {pictId} feature id for the Pictometry footprints
+             * @returns {}
+             */
+             function drawFootprints(loc, sjcId, pictId) {
              sjcFootprintLayer.setWhere("OBJECTID = " + sjcId);
              pictFootprintLayer.setWhere("OBJECTID = " + pictId);
              map1.setView([loc[1], loc[0]], 19);
              map2.setView([loc[1], loc[0]], 19);
-         }
+             }
 
-         /**
-          * This function adds one to the appropriate field in the
-            locationLayer based on the button clicked. Afterwards it
-            automatically requests a new location.
-          * @param {vote} id of the button clicked
-          * @returns {}
-          */
-         function submitVote(vote) {
+             /**
+             * This function adds one to the appropriate field in the
+             locationLayer based on the button clicked. Afterwards it
+             automatically requests a new location.
+             * @param {vote} id of the button clicked
+             * @returns {}
+             */
+             function submitVote(vote) {
              disableVoting();
              query.where("OBJECTID = " + currentId);
              query.run(function(err, fc, res) {
-                 if (err) throw new Error(err.message);
-                 addVote('voteTotal',1);
-                 addVote(vote,1);
-                 var f = fc.features[0];
-                 switch (vote) {
-                     case 'voteSjc':
-                         f.properties.SJC_VOTES += 1;
-                         break;
-                     case 'votePict':
-                         f.properties.PICT_VOTES += 1;
-                         break;
-                     case 'voteSkip':
-                         f.properties.SKIPS += 1;
-                         break;
-                     case 'voteFlag':
-                         f.properties.FLAGS += 1;
-                         break;
-                     default:
-                         console.log('No votes');
-                         break;
-                 }
-                 locationLayer.updateFeature(f, function(err, res) {
-                     if (err) throw new Error(err.message);
-                     if (!res.success == true) {
-                         throw new Error('Update failed')
-                     }
-                     getRandomFootprint(1,18772);
-                 });
+             if (err) throw new Error(err.message);
+             addVote('voteTotal',1);
+             addVote(vote,1);
+             var f = fc.features[0];
+             switch (vote) {
+             case 'voteSjc':
+             f.properties.SJC_VOTES += 1;
+             break;
+             case 'votePict':
+             f.properties.PICT_VOTES += 1;
+             break;
+             case 'voteSkip':
+             f.properties.SKIPS += 1;
+             break;
+             case 'voteFlag':
+             f.properties.FLAGS += 1;
+             break;
+             default:
+             console.log('No votes');
+             break;
+             }
+             locationLayer.updateFeature(f, function(err, res) {
+             if (err) throw new Error(err.message);
+             if (!res.success == true) {
+             throw new Error('Update failed')
+             }
+             getRandomFootprint(1,18772);
+             });
 
              });
-         }
-
-         /**
-          * This function updates the vote count for a specific key in
-            localStorage.
-          * @param {vote} vote key
-          * @param {count} amount to increment the vote by (usually 1)
-          * @returns {}
-          */
-         function addVote(vote, count) {
-             if (canUseLocalStorage) {
-                 var oldValue = parseInt(localStorage.getItem(vote)) || 0;
-                 localStorage.setItem(vote, oldValue + count);
              }
-         }
 
-         /**
-          * This function checks if Storage is available in the
-            browser.
-          * @param {type} type of Storage to test, localStorage,
-            sessionStorage, or globalStorage
-          * @returns {boolean}
-          */
-         function storageAvailable(type) {
+             /**
+             * This function updates the vote count for a specific key in
+             localStorage.
+             * @param {vote} vote key
+             * @param {count} amount to increment the vote by (usually 1)
+             * @returns {}
+             */
+             function addVote(vote, count) {
+             if (canUseLocalStorage) {
+             var oldValue = parseInt(localStorage.getItem(vote)) || 0;
+             localStorage.setItem(vote, oldValue + count);
+             }
+             }
+
+             /**
+             * This function checks if Storage is available in the
+             browser.
+             * @param {type} type of Storage to test, localStorage,
+             sessionStorage, or globalStorage
+             * @returns {boolean}
+             */
+             function storageAvailable(type) {
 	     try {
-		 var storage = window[type],
-		     x = '__storage_test__';
-		 storage.setItem(x, x);
-		 storage.removeItem(x);
-		 return true;
+	     var storage = window[type],
+	     x = '__storage_test__';
+	     storage.setItem(x, x);
+	     storage.removeItem(x);
+	     return true;
 	     }
 	     catch(e) {
-		 return false;
+	     return false;
 	     }
-         }
+             }
 
-         function disableVoting() {
+             function disableVoting() {
              var voteButtons = document.querySelectorAll('.vote-button');
              for (var i = 0; i < voteButtons.length; i++) {
-                 voteButtons[i].disabled = true;
+             voteButtons[i].disabled = true;
              }
-         }
+             }
 
-         function enableVoting() {
+             function enableVoting() {
              var voteButtons = document.querySelectorAll('.vote-button');
              for (var i = 0; i < voteButtons.length; i++) {
-                 voteButtons[i].disabled = false;
+             voteButtons[i].disabled = false;
              }
-         }
+             }
 
-         getRandomFootprint(1,18772);
-        </script>
+             getRandomFootprint(1,18772);
+             </script> -->
     </body>
 </html>
