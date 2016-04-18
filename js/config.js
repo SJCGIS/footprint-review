@@ -40,4 +40,4 @@ module.exports.achievements = [
             className: 'achievement-card__house-hunter'
         }
     }
-];
+]

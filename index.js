@@ -1,3 +1,3 @@
-var App = require('./app');
+var App = require('./app')
 
-var app = new App();
+var app = new App()
