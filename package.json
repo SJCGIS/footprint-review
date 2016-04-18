@@ -6,12 +6,18 @@
     "scripts": {
         "test": "browserify test/test.js | tape-run",
         "browser-test": "budo test/test.js --live --serve bundle.js",
-        "start": "budo index.js --live --serve bundle.js"
+        "start": "budo app.js --live --serve bundle.js"
     },
     "browserify": {
         "transform": [
             "babelify",
             "yo-yoify"
+        ]
+    },
+    "standard": {
+        "ignore": [
+            "/docs/",
+            "/js/dialog-polyfill.js"
         ]
     },
     "repository": {

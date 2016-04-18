@@ -4,9 +4,10 @@ var FootprintMap = require('./js/map')
 var config = require('./js/config')
 var AchievementViewer = require('./js/achievement-viewer')
 
-module.exports = App
+App()
 
 function App () {
+  if (!(this instanceof App)) return new App()
   var body = document.body
   var achievementViewer = new AchievementViewer(config.achievements, body)
 
@@ -115,5 +116,5 @@ function App () {
       enableVoting()
     })
   }
-  getNew()
+  return getNew()
 }
