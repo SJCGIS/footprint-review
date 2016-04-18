@@ -1,11 +1,11 @@
-var Leaflet = require('leaflet')
+var L = require('leaflet')
 require('esri-leaflet')
 var EventEmitter = require('events').EventEmitter
 var inherits = require('inherits')
 
 module.exports = Service
 
-function Service(opts) {
+function Service (opts) {
   var self = this
   EventEmitter.call(this)
   var service = L.esri.Services.featureLayerService({
@@ -17,21 +17,21 @@ function Service(opts) {
 
   var oId = opts.oId || null
 
-  this.getFeatures = function(callback, context) {
-    query.where("OBJECTID=" + this.oId())
+  this.getFeatures = function (callback, context) {
+    query.where('OBJECTID=' + this.oId())
     query.run(callback)
   }
 
-  this.service = function() {
+  this.service = function () {
     return service
   }
 
-  this.setoId = function(newoId) {
+  this.setoId = function (newoId) {
     oId = newoId
     self.emit('service::oIdChange', newoId)
   }
 
-  this.oId = function() {
+  this.oId = function () {
     return oId
   }
 }
