@@ -16,4 +16,4 @@ module.exports.achievements = [
             challenge: [">", 'totalVotes', 100]
         }
     }
-];
+]

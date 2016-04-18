@@ -1,6 +1,6 @@
-var FootprintMap = require('./map');
+var FootprintMap = require('./map')
 
-module.exports = Review;
+module.exports = Review
 
 function Review() {
     var voteOpts = {
@@ -20,34 +20,34 @@ function Review() {
             "field": "FLAGS",
             "storageId": "voteFlag"
         }
-    };
+    }
 
-    var map1 = FootprintMap({'mapId': 'map1'});
-    var map2 = FootprintMap({'mapId': 'map2'});
-    var currentId;
-    var currentLocation;
-    var proxyUrl = '/proxy/proxy.ashx';
-    var token = 'KoVc8IZLRBBdFTVAd3Vt6yvv64edhF5FE-YbjfZ0tB5tsobPpnSuNMtxEUhTThzDJvFZbVZJXQGkhLJIcHtTUMVee9ltT6ldOoTH1B4zQkavCq5ts0dF5bhBgp5c3XmbZIkK_5tNJJAd9FjYIqZZng..';
+    var map1 = FootprintMap({'mapId': 'map1'})
+    var map2 = FootprintMap({'mapId': 'map2'})
+    var currentId
+    var currentLocation
+    var proxyUrl = '/proxy/proxy.ashx'
+    var token = 'KoVc8IZLRBBdFTVAd3Vt6yvv64edhF5FE-YbjfZ0tB5tsobPpnSuNMtxEUhTThzDJvFZbVZJXQGkhLJIcHtTUMVee9ltT6ldOoTH1B4zQkavCq5ts0dF5bhBgp5c3XmbZIkK_5tNJJAd9FjYIqZZng..'
 
     var sjcFootprintsQuery = L.esri.Services.featureLayerService({
         url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/1',
         //proxy: proxyUrl,
         token: token
 
-    }).query();
+    }).query()
     var pictFootprintsQuery = L.esri.Services.featureLayerService({
         url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/2',
         //proxy: proxyUrl,
         token: token
-    }).query();
+    }).query()
     var locationLayer = L.esri.Services.featureLayerService({
         url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/0',
         //proxy: proxyUrl,
         token: token
-    });
+    })
 
 
-    var query = locationLayer.query();
+    var query = locationLayer.query()
 
     /**
      * This function finds a random compare location and passes the
@@ -56,10 +56,10 @@ function Review() {
      * @param {max} maximum inclusive feature id for random function
      */
     this.getNewLocation = function(min, max) {
-        currentId = Math.floor(Math.random() * (max- min + 1)) + min;
-        query.where("OBJECTID = " + currentId);
-        query.run(locationHandler);
-    };
+        currentId = Math.floor(Math.random() * (max- min + 1)) + min
+        query.where("OBJECTID = " + currentId)
+        query.run(locationHandler)
+    }
 
     /**
      * This function sets the location and footprint geojson to the
@@ -69,8 +69,8 @@ function Review() {
      the map
      */
     function setFootprint(map, gj) {
-        map.zoomTo([currentLocation[1], currentLocation[0]], 19);
-        map.addGeojson(gj);
+        map.zoomTo([currentLocation[1], currentLocation[0]], 19)
+        map.addGeojson(gj)
     }
 
     /**
@@ -81,14 +81,14 @@ function Review() {
      * @param {fc} GeoJSON feature collection from query
      */
     function locationHandler(err, fc) {
-        if (err) throw new Error(err.message);
-        currentLocation = fc.features[0].geometry.coordinates;
+        if (err) throw new Error(err.message)
+        currentLocation = fc.features[0].geometry.coordinates
         getFootprint(sjcFootprintsQuery, fc.features[0].properties.SJC_Footprints_OBJECTID, function(fc) {
-            setFootprint(map1, fc);
-        });
+            setFootprint(map1, fc)
+        })
         getFootprint(pictFootprintsQuery, fc.features[0].properties.PICT_Footprints_OBJECTID, function(fc) {
-            setFootprint(map2, fc);
-        });
+            setFootprint(map2, fc)
+        })
     }
 
     /**
@@ -100,17 +100,17 @@ function Review() {
 query is complete
      */
     function getFootprint(query, oid, callback) {
-        query.where("OBJECTID = " + oid);
+        query.where("OBJECTID = " + oid)
         query.run(function(err, fc) {
-            if (err) throw new Error(err.message);
-            callback(fc);
-        });
+            if (err) throw new Error(err.message)
+            callback(fc)
+        })
     }
 
     function submitVote(vote) {
         getFootprint(query, currentId, function(fc) {
-            voteHandler(vote, fc);
-        });
+            voteHandler(vote, fc)
+        })
     }
 
     function voteHandler(vote, fc) {

@@ -1,7 +1,7 @@
-var L = require('leaflet');
-require('esri-leaflet');
+var L = require('leaflet')
+require('esri-leaflet')
 
-module.exports = FootprintMap;
+module.exports = FootprintMap
 
 function FootprintMap(opts) {
     var mapOptions = {
@@ -12,21 +12,21 @@ function FootprintMap(opts) {
         dragging: false,
         keyboard: false,
         tap: false
-    };
-    if (!(this instanceof FootprintMap)) return new FootprintMap(opts);
-    this.element = document.createElement('div');
-    var map = L.map(opts.mapId, mapOptions);
+    }
+    if (!(this instanceof FootprintMap)) return new FootprintMap(opts)
+    this.element = document.createElement('div')
+    var map = L.map(opts.mapId, mapOptions)
     var baseLayer = L.esri.tiledMapLayer({
         url: 'https://sjcgis.org/arcgis/rest/services/Basemaps/Aerials_2013_WM/MapServer',
         maxZoom: 19
-    });
-    baseLayer.addTo(map);
+    })
+    baseLayer.addTo(map)
 
     this.zoomTo = function(latlng, z){
-        map.setView(latlng, z);
-    };
+        map.setView(latlng, z)
+    }
 
     this.addGeojson = function(gj) {
-        L.geoJson(gj).addTo(map);
-    };
+        L.geoJson(gj).addTo(map)
+    }
 }
