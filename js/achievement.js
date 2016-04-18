@@ -19,8 +19,6 @@ module.exports = Achievement
  *className: 'achievement-card__robot'
  * })
  */
-
-
 function Achievement (id, opts) {
   if (!(this instanceof Achievement)) return new Achievement(id, opts)
   EventEmitter.call(this)
