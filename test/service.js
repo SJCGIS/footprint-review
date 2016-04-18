@@ -12,22 +12,22 @@ var opts = {
   }
 }
 
-test('service', function(ttt) {
+test('service', function (ttt) {
   var service = new Service(opts)
-  ttt.test('service with defined oId', function(tt) {
-    tt.test('getFeatures', function(t){
-      service.getFeatures(function(err, res) {
+  ttt.test('service with defined oId', function (tt) {
+    tt.test('getFeatures', function (t) {
+      service.getFeatures(function (err, res) {
         t.ifError(err, 'no error')
         t.equal(res.features[0].id, 222, 'correct object id returned')
         t.end()
       })
     })
-    tt.test('assigned oId', function(t) {
+    tt.test('assigned oId', function (t) {
       t.equal(service.oId(), 222, 'assigned oId correct')
       t.end()
     })
-    tt.test('set oId', function(t) {
-      service.on('service::oIdChange', function(id) {
+    tt.test('set oId', function (t) {
+      service.on('service::oIdChange', function (id) {
         t.equal(id, 223, 'new-oId event emitted')
       })
       service.setoId(223)
