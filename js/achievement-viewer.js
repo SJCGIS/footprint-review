@@ -74,6 +74,15 @@ return cardify(card);
         return yo`
 <div class="${achievement.opts.className} achievement-card mdl-cell mdl-cell-4-col mdl-card mdl-shadow--4dp">
 <div class="mdl-card__title mdl-card--expand">
+<div class="mdl-card__menu">
+<button id="${achievement.opts.className}--share" class="mdl-button mdl-js-button mdl-button--icon">
+<i class="material-icons">share</i>
+</button>
+<ul for="${achievement.opts.className}--share">
+<li>Twitter</li>
+<li>Facebook</li>
+</ul>
+</div>
 <h2 class="mdl-card__title-text">${achievement.opts.title}</h2>
 </div>
 <div class="mdl-card__supporting-text">
@@ -84,6 +93,7 @@ ${achievement.opts.subtitle}
 
     }
 }
+
 
 AchievementViewer.prototype.checkAchievements = function() {
     this.achievements.forEach(function(achievement) {
