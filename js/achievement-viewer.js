@@ -37,9 +37,7 @@ function AchievementViewer (list, parentEl) {
 <dialog class="achievement-dialog mdl-dialog">
 <h4 class="mdl-dialog__title">Achievements</h4>
 <div class="mdl-dialog__content">
-${gridify(achievements, 3).map(function (card) {
-  return card
-})}
+${gridify(achievements)}
 </div>
 <div class="mdl-dialog__actions">
 <button type="button" class="mdl-button close">Close</button>
@@ -47,27 +45,17 @@ ${gridify(achievements, 3).map(function (card) {
 </dialog>`
   }
 
-  function gridify (array, chunkSize) {
-    var grids = []
+  function gridify (array) {
     var unlockedCards = array.filter(function (item) {
       return item.isUnlocked()
     })
-
-    unlockedCards.map(function (n, i) {
-      if (i % chunkSize === 0) {
-        grids.push(unlockedCards.slice(i, i + chunkSize))
-      }
-    })
-    var el = grids.map(function (cards) {
-      return yo`
+    return yo`
 <div class="mdl-grid">
-${cards.map(function (card) {
+${unlockedCards.map(function (card) {
   return cardify(card)
 })}
 </div>
 `
-    })
-    return el
   }
 
   function cardify (achievement) {
