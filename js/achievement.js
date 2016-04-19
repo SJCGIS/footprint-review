@@ -16,7 +16,7 @@ module.exports = Achievement
  * var achievement = new Achievement('robot', {
  * title: 'Robot',
  * subtitle: 'Beep Boop',
- *className: 'achievement-card__robot'
+ * className: 'achievement-card__robot'
  * })
  */
 function Achievement (id, opts) {
