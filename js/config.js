@@ -41,3 +41,23 @@ module.exports.achievements = [
     }
   }
 ]
+
+module.exports.socialNetworks = [
+  {
+    name: 'Twitter',
+    baseShare: 'https://twitter.com/intent/tweet',
+    queryParams: {
+      text: 'I just unlocked a new achievement on Footprint Review!',
+      url: 'http://sjcgis.org/footprint-review',
+      related: '@npeihl'
+    }
+  }, {
+    name: 'Facebook',
+    baseShare: 'https://www.facebook.com/dialog/feed',
+    queryParams: {
+      appId: '241631472856853',
+      link: 'http://sjcgis.org/footprint-review',
+      display: 'page'
+    }
+  }
+]
