@@ -3,6 +3,8 @@
 
 var yo = require('yo-yo')
 var queryString = require('query-string')
+var EventEmitter = require('events').EventEmitter
+var inherits = require('inherits')
 var componentHandler = require('mdlComponentHandler')
 var dialogPolyfill = require('dialog-polyfill')
 var Achievement = require('./achievement')
@@ -11,6 +13,7 @@ var socialNetworks = require('./config').socialNetworks
 module.exports = AchievementViewer
 
 function AchievementViewer (list, parentEl) {
+  EventEmitter.call(this)
   var self = this
 
   this.achievements = list.map(function (item) {
@@ -33,9 +36,16 @@ function AchievementViewer (list, parentEl) {
     return el
   }
 
+  this.checkAchievements = function () {
+    this.achievements.forEach(function (achievement) {
+      achievement.unlock()
+    })
+  }
+
   function update () {
     var newEl = render(self.achievements)
     yo.update(el, newEl)
+    self.emit('achievementViewer::newAchievements')
   }
 
   function render (achievements) {
@@ -122,8 +132,4 @@ ${gridify(achievements)}
   }
 }
 
-AchievementViewer.prototype.checkAchievements = function () {
-  this.achievements.forEach(function (achievement) {
-    achievement.unlock()
-  })
-}
+inherits(AchievementViewer, EventEmitter)

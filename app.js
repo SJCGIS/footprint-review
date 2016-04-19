@@ -3,6 +3,7 @@ var Service = require('./js/service')
 var FootprintMap = require('./js/map')
 var config = require('./js/config')
 var AchievementViewer = require('./js/achievement-viewer')
+var AchievementSnackbar = require('./js/achievement-snackbar')
 
 App()
 
@@ -10,6 +11,7 @@ function App () {
   if (!(this instanceof App)) return new App()
   var body = document.body
   var achievementViewer = new AchievementViewer(config.achievements, body)
+  var achievementSnackbar = new AchievementSnackbar(body)
 
   var achievementNav = document.getElementById('achievement-nav')
   achievementNav.addEventListener('click', function (e) {
@@ -60,6 +62,16 @@ function App () {
       fpService.addVote(e.target.name)
     })
   }
+
+  achievementViewer.on('achievementViewer::newAchievements', function () {
+    achievementSnackbar.showSnackbar({
+      message: 'New achievement unlocked!',
+      actionHandler: function () {
+        achievementViewer.el().showModal()
+      },
+      actionText: 'Show'
+    })
+  })
 
   sjcFootprint.on('service::oIdChange', function (id) {
     sjcFootprint.getFeatures(function (err, fc) {
