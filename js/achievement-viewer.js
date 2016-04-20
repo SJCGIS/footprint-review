@@ -114,12 +114,11 @@ ${gridify(achievements)}
     menu.setAttribute('for', buttonId)
     socialNetworks.forEach(function (network) {
       var li = document.createElement('li')
-      var a = document.createElement('a')
       li.className = 'mdl-menu__item'
-      a.setAttribute('href', shareIntent(network))
-      a.setAttribute('target', '_blank')
-      a.textContent = network.name
-      li.appendChild(a)
+      li.textContent = network.name
+      li.onclick = function (e) {
+        window.open(shareIntent(network))
+      }
       menu.appendChild(li)
     })
     return menu
