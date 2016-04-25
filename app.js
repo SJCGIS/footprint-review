@@ -33,14 +33,17 @@ function App () {
   })
 
   var sjcFootprint = new Service({
-    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare_test/FeatureServer/1'
+    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/1',
+    proxy: '/proxy/proxy.ashx'
   })
   var pictFootprint = new Service({
-    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare_test/FeatureServer/2'
+    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/2',
+    proxy: '/proxy/proxy.ashx'
   })
 
   var fpService = new VoteService({
-    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare_test/FeatureServer/0',
+    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/0',
+    proxy: '/proxy/proxy.ashx',
     min: 0,
     max: 18772,
     voteFields: {
