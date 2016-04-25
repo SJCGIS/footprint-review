@@ -5,9 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "browserify test/test.js | tape-run",
-    "browser-test": "budo test/test.js --live --serve bundle.js",
-    "start": "budo app.js --live --serve bundle.js",
-    "build": "browserify app.js | uglifyjs -mc > bundle.js"
+    "browser-test": "budo test/test.js --live --serve static/bundle.js",
+    "start": "npm run watch-css && budo app.js --live --serve static/bundle.js",
+    "build-js": "browserify app.js | uglifyjs -mc > static/bundle.js",
+    "build-css": "cat css/*.css > static/bundle.css",
+    "build": "npm run build-js && npm run build-css",
+    "watch-js": "watchify app.js -o static/bundle.js",
+    "watch-css": "catw css/*.css > static/bundle.css",
+    "watch": "npm run watch-js & npm run watch-css"
   },
   "browser": {
     "mdlComponentHandler": "./node_modules/material-design-lite/src/mdlComponentHandler.js"
@@ -52,6 +57,7 @@
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
     "budo": "^8.2.1",
+    "catw": "^1.0.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
     "tape-run": "^2.1.3",
