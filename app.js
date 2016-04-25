@@ -1,3 +1,4 @@
+var dialogPolyfill = require('dialog-polyfill')
 var VoteService = require('./js/vote-service')
 var Service = require('./js/service')
 var FootprintMap = require('./js/map')
@@ -12,6 +13,9 @@ function App () {
   var body = document.body
   var achievementViewer = new AchievementViewer(config.achievements, body)
   var achievementSnackbar = new AchievementSnackbar(body)
+
+  var helpDialog = initHelpDialog()
+  helpDialog.showModal()
 
   var achievementNav = document.getElementById('achievement-nav')
   achievementNav.addEventListener('click', function (e) {
@@ -92,7 +96,7 @@ function App () {
 
   fpService.on('vote-service::addVote', function (vote) {
     upVoteLocalStorage(vote)
-    upVoteLocalStorage('totalVotes')
+    upVoteLocalStorage('voteTotal')
     achievementViewer.checkAchievements()
     getNew()
   })
@@ -102,6 +106,30 @@ function App () {
       window.localStorage.setItem('lastId', res.objectId)
     }
   })
+
+  function initHelpDialog () {
+    var helpDialog = document.getElementById('help-dialog')
+    if (!helpDialog.showModal) {
+      dialogPolyfill.registerDialog(helpDialog)
+    }
+
+    helpDialog.querySelector('.close').addEventListener('click', function (e) {
+      helpDialog.close()
+    })
+
+    var helpNav = document.getElementById('help-nav')
+    helpNav.addEventListener('click', function (e) {
+      e.preventDefault()
+      helpDialog.showModal()
+    })
+
+    var helpDrawer = document.getElementById('help-drawer')
+    helpDrawer.addEventListener('click', function (e) {
+      e.preventDefault()
+      helpDialog.showModal()
+    })
+    return helpDialog
+  }
 
   var disableVoting = function () {
     for (var i = 0; i < buttons.length; i++) {
