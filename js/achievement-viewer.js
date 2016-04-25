@@ -45,6 +45,7 @@ function AchievementViewer (list, parentEl) {
   function update () {
     var newEl = render(self.achievements)
     yo.update(el, newEl)
+    componentHandler.upgradeAllRegistered()
     self.emit('achievementViewer::newAchievements')
   }
 
@@ -74,53 +75,48 @@ ${gridify(achievements)}
   }
 
   function cardify (achievement) {
-    var card = document.createElement('div')
-    var title = document.createElement('div')
-    var menu = document.createElement('div')
-    var subtitle = document.createElement('h2')
-    var supportingText = document.createElement('div')
-    card.className = achievement.opts.className
-    card.className += ' achievement-card mdl-cell mdl-cell-4-col mdl-card mdl-shadow--4dp'
-    title.className = 'mdl-card__title mdl-card--expand'
-    subtitle.className = 'mdl-card__title-text'
-    menu.className = 'mdl-card__menu'
-    supportingText.className = 'mdl-card__supporting-text'
-    subtitle.textContent = achievement.opts.title
-    supportingText.textContent = achievement.opts.subtitle
-    card.appendChild(title)
-    card.appendChild(supportingText)
-    title.appendChild(menu)
-    title.appendChild(subtitle)
-    menu.appendChild(mdlShareButton(achievement.opts.className + '--share'))
-    menu.appendChild(mdlShareMenu(socialNetworks, achievement.opts.className + '--share'))
+    var shareButton = mdlShareButton(achievement.opts.className + '--share')
+    var shareMenu = mdlShareMenu(socialNetworks, achievement.opts.className + '--share')
+    var card = yo`
+<div class='${achievement.opts.className} achievement-card mdl-cell mdl-cell-4-col mdl-card mdl-shadow--4dp'>
+<div class='mdl-card__title mdl-card--expand'>
+<div class='mdl-card__menu'>
+${shareButton}
+${shareMenu}
+</div>
+<h2 class='mdl-card__title-text'>${achievement.opts.title}</h2>
+</div>
+<div class='mdl-card__supporting-text'>
+${achievement.opts.subtitle}
+</div>
+</div>
+`
+    componentHandler.upgradeElements([shareButton, shareMenu])
     return card
   }
 
   function mdlShareButton (id) {
-    var button = document.createElement('button')
-    var icon = document.createElement('i')
-    icon.className = 'material-icons'
-    icon.textContent = 'share'
-    componentHandler.upgradeElement(button)
-    button.className = 'mdl-button mdl-js-button mdl-button--icon'
-    button.id = id
-    button.appendChild(icon)
+    var button =  yo`
+<button id='${id}' class='mdl-button mdl-js-button mdl-button--icon'>
+<i class='material-icons'>share</i>
+</button>
+`
+    //componentHandler.upgradeElement(button)
     return button
   }
 
   function mdlShareMenu (socialNetworks, buttonId) {
-    var menu = document.createElement('ul')
-    menu.className = 'mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect'
-    menu.setAttribute('for', buttonId)
+    var items = []
     socialNetworks.forEach(function (network) {
-      var li = document.createElement('li')
-      li.className = 'mdl-menu__item'
-      li.textContent = network.name
-      li.onclick = function (e) {
-        window.open(shareIntent(network))
-      }
-      menu.appendChild(li)
+      items.push(yo`
+<li class='mdl-menu__item'>${network.name}</li>
+`)
     })
+    var menu = yo`
+<ul class='mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect'>
+${items}
+</ul>
+`
     return menu
   }
 
