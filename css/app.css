@@ -1,0 +1,36 @@
+html, body { width: 100%; height:100%; margin:0;}
+.map { width:100%; height:250px;}
+.options { text-align: center; }
+.achievement-dialog { width: 75%; }
+
+/* Achievement Cards */
+
+.achievement-card {
+  width: 250px;
+  height: 250px;
+}
+
+.achievement-card .mdl-card__title {
+  color: #fff;
+  background: url("../img/stars.png") center/60% no-repeat #46B5AC;
+}
+
+.achievement-card__newbie .mdl-card__title {
+  background: url("../img/baby.png") center/60% no-repeat #46B5AC;
+}
+
+.achievement-card__registered-voter .mdl-card__title {
+  background: url("../img/ballot-box.png") center/60% no-repeat #46B5AC;
+}
+
+.achievement-card__eagle-eye .mdl-card__title {
+  background: url("../img/eagle.png") center/60% no-repeat #46B5AC;
+}
+
+.achievement-card__inspector-detector .mdl-card__title {
+  background: url("../img/inspector.png") center/50% no-repeat #46B5AC;
+}
+
+.achievement-card__house-hunter .mdl-card__title {
+  background: url("../img/house.png") center/40% no-repeat #46B5AC;
+}

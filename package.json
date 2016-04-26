@@ -1,0 +1,68 @@
+{
+  "name": "footprint-review",
+  "version": "0.0.1",
+  "description": "A simple web application for comparing and voting for the best building\r footprint from two sources in San Juan County, WA.",
+  "main": "index.js",
+  "scripts": {
+    "test": "browserify test/test.js | tape-run",
+    "browser-test": "budo test/test.js --live --serve static/bundle.js",
+    "start": "npm run watch-css && budo app.js --live --serve static/bundle.js",
+    "build-js": "browserify app.js | uglifyjs -mc > static/bundle.js",
+    "build-css": "cat css/*.css > static/bundle.css",
+    "build": "npm run build-js && npm run build-css",
+    "watch-js": "watchify app.js -o static/bundle.js",
+    "watch-css": "catw css/*.css > static/bundle.css",
+    "watch": "npm run watch-js & npm run watch-css"
+  },
+  "browser": {
+    "mdlComponentHandler": "./node_modules/material-design-lite/src/mdlComponentHandler.js"
+  },
+  "browserify": {
+    "transform": [
+      "yo-yoify",
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "mdlComponentHandler": "window.componentHandler"
+  },
+  "standard": {
+    "ignore": [
+      "/docs/",
+      "/js/dialog-polyfill.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SJCGIS/footprint-review.git"
+  },
+  "author": "Nick Peihl <nickpeihl@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/SJCGIS/footprint-review/issues"
+  },
+  "homepage": "https://github.com/SJCGIS/footprint-review#readme",
+  "dependencies": {
+    "dialog-polyfill": "^0.4.3",
+    "esri-leaflet": "^1.0.3",
+    "feature-filter": "^2.0.1",
+    "has-localstorage": "^1.0.1",
+    "inherits": "^2.0.1",
+    "leaflet": "^0.7.7",
+    "material-design-lite": "^1.1.3",
+    "query-string": "^4.1.0",
+    "yo-yo": "^1.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12",
+    "budo": "^8.2.1",
+    "catw": "^1.0.1",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.5.1",
+    "tape-run": "^2.1.3",
+    "uglify-js": "^2.6.2",
+    "watchify": "^3.7.0",
+    "yo-yoify": "^1.0.2"
+  }
+}
