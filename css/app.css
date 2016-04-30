@@ -19,6 +19,10 @@ html, body { width: 100%; height:100%; margin:0;}
   background: url("../img/baby.png") center/60% no-repeat #46B5AC;
 }
 
+.achievement-card__eager-beaver .mdl-card__title {
+  background: url("../img/beaver.png") center/50% no-repeat #46B5AC;
+}
+
 .achievement-card__registered-voter .mdl-card__title {
   background: url("../img/ballot-box.png") center/60% no-repeat #46B5AC;
 }
