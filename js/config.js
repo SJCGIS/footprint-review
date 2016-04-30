@@ -8,6 +8,14 @@ module.exports.achievements = [
       className: 'achievement-card__newbie'
     }
   }, {
+    id: 'eager-beaver',
+    opts: {
+      title: 'Eager Beaver',
+      subtitle: 'You\'ve reviewed 50 footprints! Are you gonna stop now? Gnaw.',
+      challenge: ['>=', 'totalVotes', 50],
+      className: 'achievement-card__eager-beaver'
+    }
+  }, {
     id: 'registered-voter',
     opts: {
       title: 'Registered Voter',
