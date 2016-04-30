@@ -4,7 +4,7 @@ module.exports.achievements = [
     opts: {
       title: 'Newbie',
       subtitle: 'Welcome aboard, kiddo. You\'ve reviewed at least ten footprints!',
-      challenge: ['>=', 'totalVotes', 10],
+      challenge: ['>=', 'voteTotal', 10],
       className: 'achievement-card__newbie'
     }
   }, {
@@ -20,7 +20,7 @@ module.exports.achievements = [
     opts: {
       title: 'Registered Voter',
       subtitle: 'Throw a political party! You\'ve reviewed over 100 footprints!',
-      challenge: ['>', 'totalVotes', 100],
+      challenge: ['>', 'voteTotal', 100],
       className: 'achievement-card__registered-voter'
     }
   }, {
@@ -28,7 +28,7 @@ module.exports.achievements = [
     opts: {
       title: 'Eagle Eye',
       subtitle: 'Way to go, hotshot! You\'ve reviewed over 1000 footprints!',
-      challenge: ['>', 'totalVotes', 1000],
+      challenge: ['>', 'voteTotal', 1000],
       className: 'achievement-card__eagle-eye'
     }
   }, {
@@ -36,7 +36,7 @@ module.exports.achievements = [
     opts: {
       title: 'Inspector Detector',
       subtitle: 'Congratulations, detective! You\'ve reviewed over 2000 footprints!',
-      challenge: ['>', 'totalVotes', 2000],
+      challenge: ['>', 'voteTotal', 2000],
       className: 'achievement-card__inspector-detector'
     }
   }, {
@@ -44,7 +44,7 @@ module.exports.achievements = [
     opts: {
       title: 'House Hunter',
       subtitle: 'You\'ve reviewed over 4000 footprints! Find a favorite yet?',
-      challenge: ['>', 'totalVotes', 4000],
+      challenge: ['>', 'voteTotal', 4000],
       className: 'achievement-card__house-hunter'
     }
   }

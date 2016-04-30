@@ -1,3 +1,4 @@
+var dialogPolyfill = require('dialog-polyfill')
 var VoteService = require('./js/vote-service')
 var Service = require('./js/service')
 var FootprintMap = require('./js/map')
@@ -12,6 +13,9 @@ function App () {
   var body = document.body
   var achievementViewer = new AchievementViewer(config.achievements, body)
   var achievementSnackbar = new AchievementSnackbar(body)
+
+  var helpDialog = initHelpDialog()
+  helpDialog.showModal()
 
   var achievementNav = document.getElementById('achievement-nav')
   achievementNav.addEventListener('click', function (e) {
@@ -33,14 +37,17 @@ function App () {
   })
 
   var sjcFootprint = new Service({
-    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare_test/FeatureServer/1'
+    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/1',
+    proxy: '/proxy/proxy.ashx'
   })
   var pictFootprint = new Service({
-    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare_test/FeatureServer/2'
+    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/2',
+    proxy: '/proxy/proxy.ashx'
   })
 
   var fpService = new VoteService({
-    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare_test/FeatureServer/0',
+    url: 'http://services.arcgis.com/PNkCg7xWnaf90qde/arcgis/rest/services/Footprint_Compare/FeatureServer/0',
+    proxy: '/proxy/proxy.ashx',
     min: 0,
     max: 18772,
     voteFields: {
@@ -89,7 +96,7 @@ function App () {
 
   fpService.on('vote-service::addVote', function (vote) {
     upVoteLocalStorage(vote)
-    upVoteLocalStorage('totalVotes')
+    upVoteLocalStorage('voteTotal')
     achievementViewer.checkAchievements()
     getNew()
   })
@@ -99,6 +106,30 @@ function App () {
       window.localStorage.setItem('lastId', res.objectId)
     }
   })
+
+  function initHelpDialog () {
+    var helpDialog = document.getElementById('help-dialog')
+    if (!helpDialog.showModal) {
+      dialogPolyfill.registerDialog(helpDialog)
+    }
+
+    helpDialog.querySelector('.close').addEventListener('click', function (e) {
+      helpDialog.close()
+    })
+
+    var helpNav = document.getElementById('help-nav')
+    helpNav.addEventListener('click', function (e) {
+      e.preventDefault()
+      helpDialog.showModal()
+    })
+
+    var helpDrawer = document.getElementById('help-drawer')
+    helpDrawer.addEventListener('click', function (e) {
+      e.preventDefault()
+      helpDialog.showModal()
+    })
+    return helpDialog
+  }
 
   var disableVoting = function () {
     for (var i = 0; i < buttons.length; i++) {
