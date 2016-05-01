@@ -27,6 +27,10 @@ html, body { width: 100%; height:100%; margin:0;}
   background: url("../img/ballot-box.png") center/60% no-repeat #46B5AC;
 }
 
+.achievement-card__house-flipper .mdl-card__title {
+  background: url("../img/house-flipper.png") center/40% no-repeat #46B5AC;
+}
+
 .achievement-card__eagle-eye .mdl-card__title {
   background: url("../img/eagle.png") center/60% no-repeat #46B5AC;
 }

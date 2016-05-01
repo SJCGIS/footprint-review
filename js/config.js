@@ -24,6 +24,14 @@ module.exports.achievements = [
       className: 'achievement-card__registered-voter'
     }
   }, {
+    id: 'house-flipper',
+    opts: {
+      title: 'House Flipper',
+      subtitle: 'You\'re a master of redevelopment! You\'ve reviewed over 200 footprints!',
+      challenge: ['>', 'voteTotal', 200],
+      className: 'achievement-card__house-flipper'
+    }
+  }, {
     id: 'eagle-eye',
     opts: {
       title: 'Eagle Eye',
