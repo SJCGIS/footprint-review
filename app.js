@@ -1,3 +1,5 @@
+/* global ga */
+
 var dialogPolyfill = require('dialog-polyfill')
 var VoteService = require('./js/vote-service')
 var Service = require('./js/service')
@@ -21,12 +23,14 @@ function App () {
   achievementNav.addEventListener('click', function (e) {
     e.preventDefault()
     achievementViewer.el().showModal()
+    ga('send', 'event', 'achievement', 'view-nav')
   })
 
   var achievementDrawer = document.getElementById('achievement-drawer')
   achievementDrawer.addEventListener('click', function (e) {
     e.preventDefault()
     achievementViewer.el().showModal()
+    ga('send', 'event', 'achievement', 'view-drawer')
   })
 
   var map1 = new FootprintMap({
@@ -78,6 +82,7 @@ function App () {
       },
       actionText: 'Show'
     })
+    ga('send', 'event', 'achievement', 'unlocked')
   })
 
   sjcFootprint.on('service::oIdChange', function (id) {
@@ -97,6 +102,7 @@ function App () {
   fpService.on('vote-service::addVote', function (vote) {
     upVoteLocalStorage(vote)
     upVoteLocalStorage('voteTotal')
+    ga('send', 'event', 'vote', vote)
     achievementViewer.checkAchievements()
     getNew()
   })
@@ -121,12 +127,14 @@ function App () {
     helpNav.addEventListener('click', function (e) {
       e.preventDefault()
       helpDialog.showModal()
+      ga('send', 'event', 'help', 'view-nav')
     })
 
     var helpDrawer = document.getElementById('help-drawer')
     helpDrawer.addEventListener('click', function (e) {
       e.preventDefault()
       helpDialog.showModal()
+      ga('send', 'event', 'help', 'view-drawer')
     })
     return helpDialog
   }
