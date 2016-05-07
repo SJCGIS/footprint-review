@@ -41,12 +41,16 @@ function Achievement (id, opts) {
     locked = false
   }
 
-  var store = function () {
+  /**
+   * Private method to store the status of the achievement in
+   localStorage
+   */
+  var _store = function () {
     window.localStorage.setItem(self.id, String(self.isUnlocked()))
   }
 
   /**
-   * This function checks if the achievement can be unlocked by the
+   * This public method checks if the achievement can be unlocked by the
    value in localStorage
    * @returns {boolean} challenge is unlockable
    */
@@ -58,8 +62,9 @@ function Achievement (id, opts) {
     props[k] = v
     return filter({properties: props})
   }
+
   /**
-   * This function unlocks the achievement if it's not already unlocked
+   * This public method unlocks the achievement if it's not already unlocked
    and if it can be unlocked. If successfully unlocked the achievement is
    added to localStorage and emits an event
    */
@@ -67,10 +72,16 @@ function Achievement (id, opts) {
     return !locked
   }
 
+  /**
+   * This public method unlocks the achievement if the achievement is locked
+   and the challenge is successful. It also emits an event when the achievement
+   is unlocked
+   * @fires achievement::unlocked
+   */
   this.unlock = function () {
     if (!this.isUnlocked() && this.runChallenge()) {
       locked = false
-      store()
+      _store()
       self.emit('achievement::unlocked', self.id)
     }
   }
