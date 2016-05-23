@@ -43,7 +43,7 @@ Flag button. The GIS team will carefully review all flagged footprints.
 1. Install Node.js
 2. Clone or download and extract the repository
 3. From the command line `cd` to the repo directory and run `npm install`
-4. Change the service URLs in the [app.js](https://github.com/SJCGIS/footprint-review/blob/master/app.js#L44) file to .../Footprint_Compare_Test/... (the production URLs will not work locally)
+4. **Important!** - Change the three service URLs in the [app.js](https://github.com/SJCGIS/footprint-review/blob/master/app.js#L43-L54) file to .../Footprint_Compare_Test/... and remove the `proxy` parameters (the production URLs will not work locally)
 5. Run `npm start` and open your web browser to http://localhost:9000
 
 Please submit pull requests on a new branch.
