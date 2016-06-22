@@ -87,14 +87,14 @@ function App () {
 
   sjcFootprint.on('service::oIdChange', function (id) {
     sjcFootprint.getFeatures(function (err, fc) {
-      if (err) throw err
+      if (err) handleError(err, 'sjcFootprint.getFeatures')
       map1.addGeojson(fc)
     })
   })
 
   pictFootprint.on('service::oIdChange', function (id) {
     pictFootprint.getFeatures(function (err, fc) {
-      if (err) throw err
+      if (err) handleError(err, 'pictFootprint.getFeatures')
       map2.addGeojson(fc)
     })
   })
@@ -112,6 +112,45 @@ function App () {
       window.localStorage.setItem('lastId', res.objectId)
     }
   })
+
+  function handleError (err, callee) {
+    var errorDialog = document.getElementById('error-dialog')
+    if (!errorDialog.showModal) {
+      dialogPolyfill.registerDialog(errorDialog)
+    }
+    var errButtons = errorDialog.querySelectorAll('.mdl-button')
+    for (var i = 0; i < errButtons.length; i++) {
+      errButtons[i].addEventListener('click', function (e) {
+        handleErrorAction(e.target.id, err)
+      })
+    }
+    errorDialog.showModal()
+    ga('send', 'event', 'error', callee, err.code, err.message)
+  }
+
+  function handleErrorAction (id, err) {
+    switch (id) {
+      case 'err-reload':
+        window.location.reload()
+        break
+      case 'err-report':
+        reportError(err)
+        break
+      default:
+        break
+    }
+  }
+
+  function reportError (err) {
+    var email = 'sjcgis@sanjuanco.com'
+    var subject = 'Footprint Review Error Report'
+    var body = 'This is an automatically generated error report from Footprint Review\r\n'
+    body += '\r\n'
+    body += 'Error Code: ' + err.code + '\r\n'
+    body += 'Error Message: ' + err.message
+    var href = encodeURI('mailto://' + email + '?subject=' + subject + '&body=' + body)
+    window.location = href
+  }
 
   function initHelpDialog () {
     var helpDialog = document.getElementById('help-dialog')
@@ -158,7 +197,7 @@ function App () {
 
   var getNew = function () {
     fpService.getRandomFeature(function (err, fc) {
-      if (err) throw err
+      if (err) handleError(err, 'fpService.getRandomFeature')
       var coords = fc.features[0].geometry.coordinates
       map1.zoomTo([coords[1], coords[0]], 19)
       map2.zoomTo([coords[1], coords[0]], 19)

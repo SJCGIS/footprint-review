@@ -18,6 +18,16 @@
         <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     </head>
     <body>
+        <dialog id="error-dialog" class="mdl-dialog">
+            <h3 class="mdl-dialog__title">Error</h3>
+            <div class="mdl-dialog__content">
+                <p>An error is preventing this website from working correctly. If this is the first time you've seen this error, try reloading the page. If the error persists, please report the error to the GIS team.</p>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button type="button" id="err-reload" class="mdl-button mdl-js-button mdl-button--primary">Reload Webpage</button>
+                <button type="button" id="err-report" class="mdl-button mdl-js-button mdl-button--accent">Report Error</button>
+            </div>
+        </dialog>
         <dialog id="help-dialog" class="mdl-dialog">
             <h3 class="mdl-dialog__title">Instructions</h3>
             <div class="mdl-dialog__content">
