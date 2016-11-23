@@ -1,6 +1,6 @@
 {
   "name": "footprint-review",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A simple web application for comparing and voting for the best building\r footprint from two sources in San Juan County, WA.",
   "main": "index.js",
   "scripts": {
