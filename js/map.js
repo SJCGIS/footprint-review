@@ -1,5 +1,5 @@
 var L = require('leaflet')
-require('esri-leaflet')
+var esri = require('esri-leaflet')
 
 module.exports = FootprintMap
 
@@ -16,7 +16,7 @@ function FootprintMap (opts) {
   if (!(this instanceof FootprintMap)) return new FootprintMap(opts)
   this.element = document.createElement('div')
   var map = L.map(opts.mapId, mapOptions)
-  var baseLayer = L.esri.tiledMapLayer({
+  var baseLayer = esri.tiledMapLayer({
     url: 'https://sjcgis.org/arcgis/rest/services/Basemaps/Aerials_2013_WM/MapServer',
     maxZoom: 19
   })
