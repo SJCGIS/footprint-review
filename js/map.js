@@ -17,7 +17,7 @@ function FootprintMap (opts) {
   this.element = document.createElement('div')
   var map = L.map(opts.mapId, mapOptions)
   var baseLayer = esri.tiledMapLayer({
-    url: 'https://sjcgis.org/arcgis/rest/services/Basemaps/Aerials_2013_WM/MapServer',
+    url: 'https://sjcgis.org/arcgis/rest/services/Basemaps/Aerials_2016_WM/MapServer',
     maxZoom: 19
   })
   baseLayer.addTo(map)
