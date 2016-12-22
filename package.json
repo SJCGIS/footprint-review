@@ -44,11 +44,11 @@
   "homepage": "https://github.com/SJCGIS/footprint-review#readme",
   "dependencies": {
     "dialog-polyfill": "^0.4.3",
-    "esri-leaflet": "^1.0.3",
+    "esri-leaflet": "^2.0.6",
     "feature-filter": "^2.0.1",
     "has-localstorage": "^1.0.1",
     "inherits": "^2.0.1",
-    "leaflet": "^0.7.7",
+    "leaflet": "^1.0.2",
     "material-design-lite": "^1.1.3",
     "query-string": "^4.1.0",
     "yo-yo": "^1.1.1"
@@ -56,13 +56,13 @@
   "devDependencies": {
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
-    "budo": "^8.2.1",
+    "budo": "^9.2.2",
     "catw": "^1.0.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
     "tape-run": "^2.1.3",
     "uglify-js": "^2.6.2",
     "watchify": "^3.7.0",
-    "yo-yoify": "^1.0.2"
+    "yo-yoify": "^3.5.0"
   }
 }

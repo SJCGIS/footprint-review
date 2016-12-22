@@ -1,5 +1,5 @@
 var L = require('leaflet')
-require('esri-leaflet')
+var esri = require('esri-leaflet')
 var EventEmitter = require('events').EventEmitter
 var inherits = require('inherits')
 
@@ -8,7 +8,7 @@ module.exports = Service
 function Service (opts) {
   var self = this
   EventEmitter.call(this)
-  var service = L.esri.Services.featureLayerService({
+  var service = esri.featureLayerService({
     url: opts.url,
     proxy: opts.proxy || '',
     token: opts.token || ''
