@@ -27,7 +27,7 @@ We will also publish the final results on [OpenStreetMap](http://openstreetmap.o
 
 ## How to contribute
 
-Two maps are shown with the same aerial imagery (2013) but with different building
+Two maps are shown with the same aerial imagery (2016) but with different building
 footprints. Compare the footprints with the aerial photo and click the
 appropriate map button to vote for that footprint. If the footprints are
 identical, vote for Map 1.
