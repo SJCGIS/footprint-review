@@ -61,7 +61,7 @@
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
     "tape-run": "^2.1.3",
-    "uglify-js": "^2.6.2",
+    "uglify-js": "2.8.5",
     "watchify": "^3.7.0",
     "yo-yoify": "^3.5.0"
   }
