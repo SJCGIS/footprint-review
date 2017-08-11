@@ -44,7 +44,7 @@
   "homepage": "https://github.com/SJCGIS/footprint-review#readme",
   "dependencies": {
     "dialog-polyfill": "^0.4.3",
-    "esri-leaflet": "^2.0.6",
+    "esri-leaflet": "^2.1.1",
     "feature-filter": "^2.0.1",
     "has-localstorage": "^1.0.1",
     "inherits": "^2.0.1",
