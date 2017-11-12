@@ -63,6 +63,6 @@
     "tape-run": "^3.0.0",
     "uglify-js": "^3.0.0",
     "watchify": "^3.7.0",
-    "yo-yoify": "^3.5.0"
+    "yo-yoify": "^4.1.0"
   }
 }
