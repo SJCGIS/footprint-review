@@ -56,7 +56,7 @@
   "devDependencies": {
     "browserify": "^14.1.0",
     "browserify-shim": "^3.8.12",
-    "budo": "^10.0.0",
+    "budo": "^11.0.0",
     "catw": "^1.0.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
