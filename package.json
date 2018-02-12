@@ -54,7 +54,7 @@
     "yo-yo": "^1.1.1"
   },
   "devDependencies": {
-    "browserify": "^14.1.0",
+    "browserify": "^16.1.0",
     "browserify-shim": "^3.8.12",
     "budo": "^10.0.0",
     "catw": "^1.0.1",
